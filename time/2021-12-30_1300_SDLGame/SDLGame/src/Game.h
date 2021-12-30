@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "TextureManager.h"
 #include "SDL2/SDL.h"
 
 class Game
@@ -23,10 +24,8 @@ public:
     bool running() const;
 
 private:
-    SDL_Window*   m_pWindow   = nullptr;
-    SDL_Renderer* m_pRenderer = nullptr;
-    bool          m_bRunning  = false;
-    SDL_Texture*  m_pTexture;             // the new SDL_Texture variable
-    SDL_Rect      m_sourceRectangle;      // the first rectangle
-    SDL_Rect      m_destinationRectangle; // another rectangle
+    SDL_Window*   m_pWindow      = nullptr;
+    SDL_Renderer* m_pRenderer    = nullptr;
+    bool          m_bRunning     = false;
+    int           m_currentFrame = 0;
 };
