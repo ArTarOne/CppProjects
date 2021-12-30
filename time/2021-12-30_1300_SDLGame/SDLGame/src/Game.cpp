@@ -36,14 +36,16 @@ bool Game::init(const char* title, const int xpos, const int ypos, const int wid
     // This function expects Red, Green, Blue and Alpha as color values
     SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
 
-    SDL_Surface* pTempSurface = SDL_LoadBMP("assets/rider.bmp");
+    SDL_Surface* pTempSurface = SDL_LoadBMP("assets/animate.bmp");
     m_pTexture                = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
     SDL_FreeSurface(pTempSurface);
-    SDL_QueryTexture(m_pTexture, nullptr, nullptr, &m_sourceRectangle.w, &m_sourceRectangle.h);
-    m_destinationRectangle.x = 100;
-    m_destinationRectangle.y = 100;
-    m_sourceRectangle.x = 0;
-    m_sourceRectangle.y = 0;
+    //SDL_QueryTexture(m_pTexture, nullptr, nullptr, &m_sourceRectangle.w, &m_sourceRectangle.h);
+    m_sourceRectangle.w      = 128;
+    m_sourceRectangle.h      = 82;
+    m_destinationRectangle.x = 0;
+    m_destinationRectangle.y = 0;
+    m_sourceRectangle.x      = 0;
+    m_sourceRectangle.y      = 0;
     m_destinationRectangle.w = m_sourceRectangle.w;
     m_destinationRectangle.h = m_sourceRectangle.h;
 
@@ -57,7 +59,8 @@ void Game::render() const
     // clear the window
     SDL_RenderClear(m_pRenderer);
 
-    SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle);
+    SDL_RenderCopyEx(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle, 0,
+                     nullptr, SDL_FLIP_HORIZONTAL);
 
     // show the window
     SDL_RenderPresent(m_pRenderer);
@@ -65,6 +68,7 @@ void Game::render() const
 
 void Game::update()
 {
+    m_sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
 }
 
 void Game::handleEvents()
