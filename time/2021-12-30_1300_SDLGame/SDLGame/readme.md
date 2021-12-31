@@ -1,8 +1,6 @@
+# Settings
+
 [TOC]
-
-# Notes about SDL Game
-
-
 
 ## Temporary build folders
 
@@ -10,8 +8,6 @@
 SDL2_image-2.0.5
 SDL2-2.0.18
 ```
-
-
 
 ## Dependencies tree view
 
@@ -31,8 +27,6 @@ SDL2
       SDL2main.lib
 ```
 
-
-
 ## Output tree view
 
 ```
@@ -44,8 +38,6 @@ SDL2.dll
 zlib1.dll
 SDLGame.exe
 ```
-
-
 
 ## SDL2_Image
 
