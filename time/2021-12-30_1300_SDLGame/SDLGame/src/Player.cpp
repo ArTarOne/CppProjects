@@ -27,7 +27,7 @@ void Player::clean()
 
 void Player::handleInput()
 {
-    if(TheInputHandler::Instance()->joysticksInitialised())
+    if(TheInputHandler::Instance()->joysticksInitialized())
     {
         // stick control
         if(TheInputHandler::Instance()->xvalue(0, 1) > 0 || TheInputHandler::Instance()->

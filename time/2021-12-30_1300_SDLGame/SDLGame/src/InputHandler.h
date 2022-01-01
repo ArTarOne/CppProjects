@@ -18,7 +18,7 @@ public:
     void                 update();
     void                 clean();
     void                 initialiseJoysticks();
-    bool                 joysticksInitialised();
+    bool                 joysticksInitialized();
     int                  xvalue(int joy, int stick);
     int                  yvalue(int joy, int stick);
     bool                 getButtonState(int joy, int buttonNumber);
@@ -30,11 +30,25 @@ private:
     InputHandler();
     ~InputHandler();
 
+    // handle keyboard events
+    void onKeyDown();
+    void onKeyUp();
+
+    // handle mouse events
+    void onMouseMove(SDL_Event& event);
+    void onMouseButtonDown(SDL_Event& event);
+    void onMouseButtonUp(SDL_Event& event);
+
+    // handle joysticks events
+    void onJoystickAxisMove(SDL_Event& event);
+    void onJoystickButtonDown(SDL_Event& event);
+    void onJoystickButtonUp(SDL_Event& event);
+
 private:
     static InputHandler*       s_pInstance;
     std::vector<SDL_Joystick*> m_joysticks;
 
-    bool m_bJoysticksInitialised;
+    bool m_bJoysticksInitialized;
     /*
      * • Left and right movement on stick one is axis 0
      * • Up and down movement on stick one is axis 1
