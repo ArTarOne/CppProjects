@@ -104,6 +104,44 @@ void InputHandler::update()
         {
             m_buttonStates[whichOne][event.jbutton.button] = false;
         }
+
+        if(event.type == SDL_MOUSEBUTTONDOWN)
+        {
+            if(event.button.button == SDL_BUTTON_LEFT)
+            {
+                m_mouseButtonStates[LEFT] = true;
+            }
+            if(event.button.button == SDL_BUTTON_MIDDLE)
+            {
+                m_mouseButtonStates[MIDDLE] = true;
+            }
+            if(event.button.button == SDL_BUTTON_RIGHT)
+            {
+                m_mouseButtonStates[RIGHT] = true;
+            }
+        }
+
+        if(event.type == SDL_MOUSEBUTTONUP)
+        {
+            if(event.button.button == SDL_BUTTON_LEFT)
+            {
+                m_mouseButtonStates[LEFT] = false;
+            }
+            if(event.button.button == SDL_BUTTON_MIDDLE)
+            {
+                m_mouseButtonStates[MIDDLE] = false;
+            }
+            if(event.button.button == SDL_BUTTON_RIGHT)
+            {
+                m_mouseButtonStates[RIGHT] = false;
+            }
+        }
+
+        if(event.type == SDL_MOUSEMOTION)
+        {
+            m_mousePosition.setX(event.motion.x);
+            m_mousePosition.setY(event.motion.y);
+        }
     }
 }
 
@@ -202,8 +240,23 @@ bool InputHandler::getButtonState(int joy, int buttonNumber)
     return m_buttonStates[joy][buttonNumber];
 }
 
-InputHandler::InputHandler()
+bool InputHandler::getMouseButtonState(int buttonNumber)
 {
+    return m_mouseButtonStates[buttonNumber];
+}
+
+const Vector2D& InputHandler::getMousePosition()
+{
+    return m_mousePosition;
+}
+
+InputHandler::InputHandler()
+    : m_mousePosition(0, 0)
+{
+    for(int i = 0; i < 3; i++)
+    {
+        m_mouseButtonStates.push_back(false);
+    }
 }
 
 InputHandler::~InputHandler()

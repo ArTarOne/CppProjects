@@ -56,5 +56,12 @@ void Player::handleInput()
         {
             m_velocity.setX(1);
         }
+
+        // mouse control
+        if(TheInputHandler::Instance()->getMouseButtonState(LEFT))
+        {
+            const Vector2D vec = TheInputHandler::Instance()->getMousePosition();
+            m_velocity          = (vec - m_position) / 100;
+        }
     }
 }
