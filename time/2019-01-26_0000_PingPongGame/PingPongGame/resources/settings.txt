@@ -1,0 +1,10 @@
+# screen size
+width = 800
+height = 600
+
+# Player types are User or Bot
+# Control keys use to control in order up/down
+FirstPlayer = User
+FirstPlayerControlKeys = Up,Down
+SecondPlayer = Bot
+SecondPlayerControlKeys = P,L
