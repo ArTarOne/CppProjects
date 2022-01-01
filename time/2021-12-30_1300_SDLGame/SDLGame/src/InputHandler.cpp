@@ -83,11 +83,7 @@ void InputHandler::initialiseJoysticks()
                 // add our pair of joysticks
                 m_joystickValues.emplace_back(new Vector2D(0, 0), new Vector2D(0, 0));
 
-                std::vector<bool> tempButtons;
-                for(int j = 0; j < SDL_JoystickNumButtons(joy); j++)
-                {
-                    tempButtons.push_back(false);
-                }
+                std::vector<bool> tempButtons(SDL_JoystickNumButtons(joy), false);
                 m_buttonStates.push_back(tempButtons);
             }
             else
@@ -175,7 +171,7 @@ bool InputHandler::isKeyDown(SDL_Scancode key)
 }
 
 InputHandler::InputHandler()
-    : m_mousePosition(0, 0)
+    : m_bJoysticksInitialized(false), m_mousePosition(0, 0)
 {
     for(int i = 0; i < 3; i++)
     {

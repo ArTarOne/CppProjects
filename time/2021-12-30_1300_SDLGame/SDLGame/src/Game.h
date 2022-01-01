@@ -11,12 +11,12 @@ public:
     static Game* Instance();
     bool init(const char* title, const int xpos, const int ypos, const int width, int height,
               const bool fullscreen);
-    void render();
-    void update();
-    void handleEvents();
-    void clean() const;
-    bool running() const;
-    void quit();
+    void          render();
+    void          update();
+    void          handleEvents();
+    void          clean() const;
+    bool          running() const;
+    void          quit();
     SDL_Renderer* getRenderer() const { return m_pRenderer; }
 
 private:
@@ -28,7 +28,6 @@ private:
     SDL_Window*              m_pWindow      = nullptr;
     SDL_Renderer*            m_pRenderer    = nullptr;
     bool                     m_bRunning     = false;
-    int                      m_currentFrame = 0;
     std::vector<GameObject*> m_gameObjects;
 };
 
