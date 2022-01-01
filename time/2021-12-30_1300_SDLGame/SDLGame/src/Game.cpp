@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include "Game.h"
 #include "Enemy.h"
+#include "InputHandler.h"
 #include "TextureManager.h"
 
 Game::Game()  = default;
@@ -30,6 +31,8 @@ bool Game::init(const char* title, const int xpos, const int ypos, const int wid
         std::cout << "SDL init fail\n";
         return false;
     }
+
+    TheInputHandler::Instance()->initialiseJoysticks();
 
     m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
     if(m_pWindow == nullptr)
@@ -65,7 +68,6 @@ void Game::render()
 {
     SDL_RenderClear(m_pRenderer); // clear to the draw color
 
-    // loop through our objects and draw them
     for(const auto& m_gameObject : m_gameObjects)
     {
         m_gameObject->draw();
@@ -76,7 +78,6 @@ void Game::render()
 
 void Game::update()
 {
-    // loop through and update our objects
     for(const auto& m_gameObject : m_gameObjects)
     {
         m_gameObject->update();
@@ -85,21 +86,13 @@ void Game::update()
 
 void Game::handleEvents()
 {
-    SDL_Event event;
-    if(SDL_PollEvent(&event))
-    {
-        switch(event.type)
-        {
-        case SDL_QUIT: m_bRunning = false;
-            break;
-        default: break;
-        }
-    }
+    TheInputHandler::Instance()->update();
 }
 
 void Game::clean() const
 {
     std::cout << "cleaning game\n";
+    TheInputHandler::Instance()->clean();
     SDL_DestroyWindow(m_pWindow);
     SDL_DestroyRenderer(m_pRenderer);
     SDL_Quit();
@@ -108,6 +101,11 @@ void Game::clean() const
 bool Game::running() const
 {
     return m_bRunning;
+}
+
+void Game::quit()
+{
+    m_bRunning = false;
 }
 
 Game* Game::s_pInstance = nullptr;
