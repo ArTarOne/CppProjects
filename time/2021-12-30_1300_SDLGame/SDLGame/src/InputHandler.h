@@ -24,6 +24,7 @@ public:
     bool                 getButtonState(int joy, int buttonNumber);
     bool                 getMouseButtonState(int buttonNumber);
     const Vector2D&      getMousePosition();
+    bool                 isKeyDown(SDL_Scancode key);
 
 private:
     InputHandler();
@@ -46,6 +47,8 @@ private:
 
     std::vector<bool> m_mouseButtonStates;
     Vector2D          m_mousePosition;
+
+    const Uint8* m_pKeystates = nullptr;
 };
 
 typedef InputHandler TheInputHandler;

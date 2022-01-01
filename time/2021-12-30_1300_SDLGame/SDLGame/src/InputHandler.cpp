@@ -17,6 +17,8 @@ void InputHandler::update()
     SDL_Event event;
     while(SDL_PollEvent(&event))
     {
+        m_pKeystates = SDL_GetKeyboardState(nullptr);
+
         if(event.type == SDL_QUIT)
         {
             TheGame::Instance()->quit();
@@ -248,6 +250,21 @@ bool InputHandler::getMouseButtonState(int buttonNumber)
 const Vector2D& InputHandler::getMousePosition()
 {
     return m_mousePosition;
+}
+
+bool InputHandler::isKeyDown(SDL_Scancode key)
+{
+    if(m_pKeystates == nullptr)
+    {
+        return false;
+    }
+
+    if(m_pKeystates[key] == 1)
+    {
+        return true;
+    }
+
+    return false;
 }
 
 InputHandler::InputHandler()
