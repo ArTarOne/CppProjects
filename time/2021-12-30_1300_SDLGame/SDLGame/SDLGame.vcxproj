@@ -156,6 +156,7 @@
     <ClCompile Include="src\GameStateMachine.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
     <ClCompile Include="src\LoaderParams.cpp" />
+    <ClCompile Include="src\MenuButton.cpp" />
     <ClCompile Include="src\MenuState.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\PlayState.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="src\GameStateMachine.h" />
     <ClInclude Include="src\InputHandler.h" />
     <ClInclude Include="src\LoaderParams.h" />
+    <ClInclude Include="src\MenuButton.h" />
     <ClInclude Include="src\MenuState.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\PlayState.h" />

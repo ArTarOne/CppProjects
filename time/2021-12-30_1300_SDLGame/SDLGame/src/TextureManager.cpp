@@ -4,6 +4,16 @@
 
 #include "TextureManager.h"
 
+TextureManager* TextureManager::Instance()
+{
+    if(s_pInstance == nullptr)
+    {
+        s_pInstance = new TextureManager();
+        return s_pInstance;
+    }
+    return s_pInstance;
+}
+
 bool TextureManager::load(const std::string& fileName, const std::string& id,
                           SDL_Renderer*      pRenderer)
 {
@@ -53,6 +63,11 @@ void TextureManager::drawFrame(const std::string& id, int x, int y, int width, i
     destRect.x = x;
     destRect.y = y;
     SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, nullptr, flip);
+}
+
+void TextureManager::clearFromTextureMap(std::string id)
+{
+    m_textureMap.erase(id);
 }
 
 TextureManager::TextureManager() = default;

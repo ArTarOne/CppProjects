@@ -73,20 +73,14 @@ void Game::render()
 {
     SDL_RenderClear(m_pRenderer); // clear to the draw color
 
-    for(const auto& m_gameObject : m_gameObjects)
-    {
-        m_gameObject->draw();
-    }
+    m_pGameStateMachine->render();
 
     SDL_RenderPresent(m_pRenderer); // draw to the screen
 }
 
 void Game::update()
 {
-    for(const auto& m_gameObject : m_gameObjects)
-    {
-        m_gameObject->update();
-    }
+    m_pGameStateMachine->update();
 }
 
 void Game::handleEvents()
