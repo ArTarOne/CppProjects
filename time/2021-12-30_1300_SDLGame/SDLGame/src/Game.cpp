@@ -2,6 +2,8 @@
 #include "Game.h"
 #include "Enemy.h"
 #include "InputHandler.h"
+#include "MenuState.h"
+#include "PlayState.h"
 #include "TextureManager.h"
 
 Game::Game()  = default;
@@ -59,6 +61,9 @@ bool Game::init(const char* title, const int xpos, const int ypos, const int wid
     m_gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
     m_gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 82, "animate")));
 
+    m_pGameStateMachine = new GameStateMachine();
+    m_pGameStateMachine->changeState(new MenuState());
+
     std::cout << "init success\n";
     m_bRunning = true;
     return true;
@@ -87,6 +92,11 @@ void Game::update()
 void Game::handleEvents()
 {
     TheInputHandler::Instance()->update();
+
+    if(TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RETURN))
+    {
+        m_pGameStateMachine->changeState(new PlayState());
+    }
 }
 
 void Game::clean() const

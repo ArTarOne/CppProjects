@@ -153,9 +153,12 @@
   <ItemGroup>
     <ClCompile Include="src\Enemy.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GameStateMachine.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
     <ClCompile Include="src\LoaderParams.cpp" />
+    <ClCompile Include="src\MenuState.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\PlayState.cpp" />
     <ClCompile Include="src\SDLGame.cpp" />
     <ClCompile Include="src\SDLGameObject.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
@@ -165,9 +168,13 @@
     <ClInclude Include="src\Enemy.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameObject.h" />
+    <ClInclude Include="src\GameState.h" />
+    <ClInclude Include="src\GameStateMachine.h" />
     <ClInclude Include="src\InputHandler.h" />
     <ClInclude Include="src\LoaderParams.h" />
+    <ClInclude Include="src\MenuState.h" />
     <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\PlayState.h" />
     <ClInclude Include="src\SDLGameObject.h" />
     <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\Vector2D.h" />

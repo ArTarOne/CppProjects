@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "GameStateMachine.h"
 #include "Player.h"
 #include "SDL2/SDL.h"
 
@@ -25,10 +26,11 @@ private:
 
 private:
     static Game*             s_pInstance;
-    SDL_Window*              m_pWindow      = nullptr;
-    SDL_Renderer*            m_pRenderer    = nullptr;
-    bool                     m_bRunning     = false;
+    SDL_Window*              m_pWindow   = nullptr;
+    SDL_Renderer*            m_pRenderer = nullptr;
+    bool                     m_bRunning  = false;
     std::vector<GameObject*> m_gameObjects;
+    GameStateMachine*        m_pGameStateMachine;
 };
 
 typedef Game TheGame;
