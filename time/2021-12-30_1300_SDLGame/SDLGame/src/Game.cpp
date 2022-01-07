@@ -112,4 +112,14 @@ void Game::quit()
     m_bRunning = false;
 }
 
+SDL_Renderer* Game::getRenderer() const
+{
+    return m_pRenderer;
+}
+
+GameStateMachine* Game::getStateMachine()
+{
+    return m_pGameStateMachine;
+}
+
 Game* Game::s_pInstance = nullptr;
