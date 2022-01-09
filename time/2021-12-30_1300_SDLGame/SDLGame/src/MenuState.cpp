@@ -26,13 +26,15 @@ void MenuState::render()
 
 bool MenuState::onEnter()
 {
-    if(!TheTextureManager::Instance()->load("assets/button.png", "playbutton",
+    if(!TheTextureManager::Instance()->load("assets/button.png",
+                                            "playbutton",
                                             TheGame::Instance()->getRenderer()))
     {
         return false;
     }
 
-    if(!TheTextureManager::Instance()->load("assets/exit.png", "exitbutton",
+    if(!TheTextureManager::Instance()->load("assets/exit.png",
+                                            "exitbutton",
                                             TheGame::Instance()->getRenderer()))
     {
         return false;
