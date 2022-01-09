@@ -1,6 +1,5 @@
 ﻿#include <iostream>
 #include "Game.h"
-#include "Enemy.h"
 #include "InputHandler.h"
 #include "MenuState.h"
 #include "PlayState.h"
@@ -52,14 +51,6 @@ bool Game::init(const char* title, const int xpos, const int ypos, const int wid
 
     // This function expects Red, Green, Blue and Alpha as color values
     SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
-
-    if(!TheTextureManager::Instance()->load("assets/animate-alpha.png", "animate", m_pRenderer))
-    {
-        return false;
-    }
-
-    m_gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
-    m_gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 82, "animate")));
 
     m_pGameStateMachine = new GameStateMachine();
     m_pGameStateMachine->changeState(new MenuState());

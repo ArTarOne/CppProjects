@@ -5,14 +5,17 @@
 #include "GameObject.h"
 #include "GameState.h"
 
+class SDLGameObject;
+
 class PlayState : public GameState
 {
 public:
-    virtual void        update();
-    virtual void        render();
-    virtual bool        onEnter();
-    virtual bool        onExit();
-    virtual std::string getStateID() const;
+    void        update() override;
+    void        render() override;
+    bool        onEnter() override;
+    bool        onExit() override;
+    std::string getStateID() const override;
+    bool        checkCollision(SDLGameObject* p1, SDLGameObject* p2);
 
 private:
     static const std::string s_playID;

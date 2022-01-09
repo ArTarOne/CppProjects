@@ -1,9 +1,6 @@
 ﻿#pragma once
 
-#include <string>
-
 #include "SDLGameObject.h"
-#include "SDL2/SDL.h"
 
 class Player : public SDLGameObject
 {

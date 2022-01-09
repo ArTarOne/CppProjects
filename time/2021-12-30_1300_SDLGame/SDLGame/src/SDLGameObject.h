@@ -7,9 +7,12 @@ class SDLGameObject : public GameObject
 {
 public:
     SDLGameObject(const LoaderParams* pParams);
-    void draw() override;
-    void update() override;
-    void clean() override;
+    void      draw() override;
+    void      update() override;
+    void      clean() override;
+    Vector2D& getPosition();
+    int       getWidth();
+    int       getHeight();
 
 protected:
     Vector2D    m_position;
@@ -19,5 +22,6 @@ protected:
     int         m_height;
     int         m_currentRow;
     int         m_currentFrame;
+    int         m_numFrames;
     std::string m_textureID;
 };

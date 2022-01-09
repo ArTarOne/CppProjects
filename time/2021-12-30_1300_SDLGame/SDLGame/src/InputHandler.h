@@ -16,15 +16,22 @@ class InputHandler
 public:
     static InputHandler* Instance();
     void                 update();
-    void                 clean();
-    void                 initialiseJoysticks();
-    bool                 joysticksInitialized();
-    int                  xvalue(int joy, int stick);
-    int                  yvalue(int joy, int stick);
-    bool                 getButtonState(int joy, int buttonNumber);
-    bool                 getMouseButtonState(int buttonNumber);
-    const Vector2D&      getMousePosition();
-    bool                 isKeyDown(SDL_Scancode key);
+
+    // joysticks
+    void clean();
+    void initialiseJoysticks();
+    bool joysticksInitialized();
+    int  xvalue(int joy, int stick);
+    int  yvalue(int joy, int stick);
+    bool getButtonState(int joy, int buttonNumber);
+
+    // mouse
+    bool            getMouseButtonState(int buttonNumber);
+    const Vector2D& getMousePosition();
+    void            reset();
+
+    // keyboard
+    bool isKeyDown(SDL_Scancode key);
 
 private:
     InputHandler();
@@ -59,8 +66,8 @@ private:
     const int                                    m_joystickDeadZone = 10000;
     std::vector<std::vector<bool>>               m_buttonStates;
 
-    std::vector<bool> m_mouseButtonStates;
-    Vector2D          m_mousePosition;
+    std::vector<int> m_mouseButtonStates;
+    Vector2D         m_mousePosition;
 
     const Uint8* m_pKeystates = nullptr;
 };

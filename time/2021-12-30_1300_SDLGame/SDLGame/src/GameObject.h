@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include "LoaderParams.h"
-
 class GameObject
 {
 public:

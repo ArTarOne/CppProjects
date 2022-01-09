@@ -10,6 +10,7 @@ SDLGameObject::SDLGameObject(const LoaderParams* pParams)
     m_textureID    = pParams->getTextureID();
     m_currentRow   = 1;
     m_currentFrame = 1;
+    m_numFrames    = pParams->getNumFrames();
 }
 
 void SDLGameObject::draw()
@@ -47,4 +48,19 @@ void SDLGameObject::update()
 
 void SDLGameObject::clean()
 {
+}
+
+Vector2D& SDLGameObject::getPosition()
+{
+    return m_position;
+}
+
+int SDLGameObject::getWidth()
+{
+    return m_width;
+}
+
+int SDLGameObject::getHeight()
+{
+    return m_height;
 }

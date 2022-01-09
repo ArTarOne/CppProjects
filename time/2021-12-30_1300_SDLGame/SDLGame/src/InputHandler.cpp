@@ -233,6 +233,14 @@ void InputHandler::onMouseButtonUp(SDL_Event& event)
     }
 }
 
+void InputHandler::reset()
+{
+    for(auto& mouseButtonState : m_mouseButtonStates)
+    {
+        mouseButtonState = false;
+    }
+}
+
 void InputHandler::onJoystickAxisMove(SDL_Event& event)
 {
     const int whichOne = event.jaxis.which;
