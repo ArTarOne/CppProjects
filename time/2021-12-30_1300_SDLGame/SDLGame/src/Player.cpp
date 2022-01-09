@@ -16,7 +16,7 @@ void Player::update()
     m_velocity.setX(0);
     m_velocity.setY(0);
     handleInput();
-    m_currentFrame = int(((SDL_GetTicks() / 100) % 6));
+    m_currentFrame = static_cast<int>((SDL_GetTicks() / 100) % m_numFrames);
     SDLGameObject::update();
 }
 

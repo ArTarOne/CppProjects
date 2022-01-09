@@ -54,8 +54,8 @@ bool PlayState::onEnter()
         return false;
     }
 
-    GameObject* player = new Player(new LoaderParams(500, 100, 128, 55, "helicopter"));
-    GameObject* enemy  = new Enemy(new LoaderParams(100, 100, 128, 55, "helicopter2"));
+    GameObject* player = new Player(new LoaderParams(500, 100, 128, 55, "helicopter", 5));
+    GameObject* enemy  = new Enemy(new LoaderParams(100, 100, 128, 55, "helicopter2", 5));
     m_gameObjects.push_back(player);
     m_gameObjects.push_back(enemy);
 
