@@ -10,6 +10,8 @@ class SDLGameObject;
 class PlayState : public GameState
 {
 public:
+    PlayState();
+
     void        update() override;
     void        render() override;
     bool        onEnter() override;

@@ -1,8 +1,8 @@
 ﻿#include "Player.h"
 #include "InputHandler.h"
 
-Player::Player(const LoaderParams* pParams)
-    : SDLGameObject(pParams)
+Player::Player()
+    : SDLGameObject()
 {
 }
 
@@ -23,6 +23,11 @@ void Player::update()
 void Player::clean()
 {
     SDLGameObject::clean();
+}
+
+void Player::load(const LoaderParams* pParams)
+{
+    SDLGameObject::load(pParams);
 }
 
 void Player::handleInput()
@@ -82,4 +87,9 @@ void Player::handleInput()
     {
         m_velocity.setY(2);
     }
+}
+
+GameObject* PlayerCreator::createGameObject() const
+{
+    return new Player();
 }

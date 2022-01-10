@@ -7,9 +7,14 @@
 #include "InputHandler.h"
 #include "PauseState.h"
 #include "Player.h"
+#include "StateParser.h"
 #include "TextureManager.h"
 
 const std::string PlayState::s_playID = "PLAY";
+
+PlayState::PlayState()
+{
+}
 
 void PlayState::update()
 {
@@ -21,6 +26,11 @@ void PlayState::update()
     for(auto& gameObject : m_gameObjects)
     {
         gameObject->update();
+    }
+
+    if(m_gameObjects.size() < 2)
+    {
+        return;
     }
 
     if(checkCollision(dynamic_cast<SDLGameObject*>(m_gameObjects[0]),
@@ -40,26 +50,11 @@ void PlayState::render()
 
 bool PlayState::onEnter()
 {
-    if(!TheTextureManager::Instance()->load("assets/helicopter.png",
-                                            "helicopter",
-                                            TheGame::Instance()->getRenderer()))
-    {
-        return false;
-    }
-
-    if(!TheTextureManager::Instance()->load("assets/helicopter2.png",
-                                            "helicopter2",
-                                            TheGame::Instance()->getRenderer()))
-    {
-        return false;
-    }
-
-    GameObject* player = new Player(new LoaderParams(500, 100, 128, 55, "helicopter", 5));
-    GameObject* enemy  = new Enemy(new LoaderParams(100, 100, 128, 55, "helicopter2", 5));
-    m_gameObjects.push_back(player);
-    m_gameObjects.push_back(enemy);
-
     std::cout << "entering PlayState\n";
+
+    StateParser stateParser;
+    stateParser.parseState("test.xml", s_playID, &m_gameObjects, &m_textureIDList);
+
     return true;
 }
 
@@ -70,8 +65,12 @@ bool PlayState::onExit()
         gameObject->clean();
     }
     m_gameObjects.clear();
-    TheTextureManager::Instance()->clearFromTextureMap("helicopter");
-    TheTextureManager::Instance()->clearFromTextureMap("helicopter2");
+
+    for(auto& textureID : m_textureIDList)
+    {
+        TheTextureManager::Instance()->clearFromTextureMap(textureID);
+    }
+    m_textureIDList.clear();
 
     std::cout << "exiting PlayState\n";
     return true;

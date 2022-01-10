@@ -80,6 +80,7 @@ void InputHandler::initialiseJoysticks()
             if(SDL_JoystickOpen(i) != nullptr)
             {
                 m_joysticks.push_back(joy);
+
                 // add our pair of joysticks
                 m_joystickValues.emplace_back(new Vector2D(0, 0), new Vector2D(0, 0));
 

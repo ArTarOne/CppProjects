@@ -1,12 +1,7 @@
 ﻿#include "Enemy.h"
 #include "SDL2/SDL.h"
 
-Enemy::Enemy(const LoaderParams* pParams)
-    : SDLGameObject(pParams)
-{
-    m_velocity.setY(2);
-    m_velocity.setX(0.001);
-}
+Enemy::Enemy() = default;
 
 void Enemy::draw()
 {
@@ -32,4 +27,15 @@ void Enemy::update()
 void Enemy::clean()
 {
     SDLGameObject::clean();
+}
+
+void Enemy::load(const LoaderParams* pParams)
+{
+    SDLGameObject::load(pParams);
+    m_velocity.setY(2);
+}
+
+GameObject* EnemyCreator::createGameObject() const
+{
+    return new Enemy();
 }

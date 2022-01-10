@@ -8,3 +8,4 @@
 **/build
 **/logs
 **/Dependencies/SDL2*
+**/enc_temp_folder

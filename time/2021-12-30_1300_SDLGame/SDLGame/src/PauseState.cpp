@@ -4,7 +4,8 @@
 #include "Game.h"
 #include "InputHandler.h"
 #include "MenuButton.h"
-#include "MenuState.h"
+#include "MainMenuState.h"
+#include "StateParser.h"
 #include "TextureManager.h"
 
 const std::string PauseState::s_pauseID = "PAUSE";
@@ -32,25 +33,14 @@ void PauseState::render()
 
 bool PauseState::onEnter()
 {
-    if(!TheTextureManager::Instance()->load("assets/resume.png",
-                                            "resumebutton",
-                                            TheGame::Instance()->getRenderer()))
-    {
-        return false;
-    }
-    if(!TheTextureManager::Instance()->load("assets/main.png",
-                                            "mainbutton",
-                                            TheGame::Instance()->getRenderer()))
-    {
-        return false;
-    }
+    StateParser stateParser;
+    stateParser.parseState("test.xml", s_pauseID, &m_gameObjects, &m_textureIDList);
 
-    GameObject* button1 = new MenuButton(new LoaderParams(200, 100, 200, 80, "mainbutton"),
-                                         s_pauseToMain);
-    GameObject* button2 = new MenuButton(new LoaderParams(200, 300, 200, 80, "resumebutton"),
-                                         s_resumePlay);
-    m_gameObjects.push_back(button1);
-    m_gameObjects.push_back(button2);
+    m_callbacks.push_back(nullptr);
+    m_callbacks.push_back(s_pauseToMain);
+    m_callbacks.push_back(s_resumePlay);
+
+    setCallbacks(m_callbacks);
 
     std::cout << "entering PauseState\n";
     return true;
@@ -64,8 +54,11 @@ bool PauseState::onExit()
     }
     m_gameObjects.clear();
 
-    TheTextureManager::Instance()->clearFromTextureMap("resumebutton");
-    TheTextureManager::Instance()->clearFromTextureMap("mainbutton");
+    for(auto& textureID : m_textureIDList)
+    {
+        TheTextureManager::Instance()->clearFromTextureMap(textureID);
+    }
+    m_textureIDList.clear();
 
     TheInputHandler::Instance()->reset(); // reset the mouse button states to false
 
@@ -78,9 +71,21 @@ std::string PauseState::getStateID() const
     return s_pauseID;
 }
 
+void PauseState::setCallbacks(const std::vector<Callback>& callbacks)
+{
+    for(auto& gameObject : m_gameObjects)
+    {
+        if(dynamic_cast<MenuButton*>(gameObject))
+        {
+            auto* pButton = dynamic_cast<MenuButton*>(gameObject);
+            pButton->setCallback(callbacks[pButton->getCallbackID()]);
+        }
+    }
+}
+
 void PauseState::s_pauseToMain()
 {
-    TheGame::Instance()->getStateMachine()->changeState(new MenuState());
+    TheGame::Instance()->getStateMachine()->changeState(new MainMenuState());
 }
 
 void PauseState::s_resumePlay()

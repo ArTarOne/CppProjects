@@ -1,14 +1,18 @@
 ﻿#pragma once
+#include "GameObjectFactory.h"
 #include "LoaderParams.h"
 #include "SDLGameObject.h"
 
 class MenuButton : public SDLGameObject
 {
 public:
-    MenuButton(const LoaderParams* pParams, void (*callback)());
+    MenuButton();
     void draw() override;
     void update() override;
     void clean() override;
+    void load(const LoaderParams* pParams) override;
+    void setCallback(void (*callback)());
+    int  getCallbackID();
 
 private:
     enum button_state
@@ -20,4 +24,10 @@ private:
 
     void (*m_callback)();
     bool   m_bReleased;
+    int    m_callbackID;
+};
+
+class MenuButtonCreator : public BaseCreator
+{
+    GameObject* createGameObject() const override;
 };
