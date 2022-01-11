@@ -1,15 +1,10 @@
 # Settings
 
+
+
 [TOC]
 
-## Temporary build folders
-
-```
-SDL2_image-2.0.5
-SDL2-2.0.18
-```
-
-## Dependencies tree view
+## Dependencies tree view (for the binary files)
 
 ```
 SDL2
