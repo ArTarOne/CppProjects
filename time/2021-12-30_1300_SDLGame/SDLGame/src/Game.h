@@ -7,14 +7,17 @@ class Game
 {
 public:
     static Game* Instance();
+
     bool init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
     void render();
     void update();
     void handleEvents();
     void clean() const;
     bool running() const;
+    void finalizeIteration();
     void quit();
-    SDL_Renderer* getRenderer() const;
+
+    SDL_Renderer*     getRenderer() const;
     GameStateMachine* getStateMachine();
 
 private:

@@ -45,6 +45,7 @@ void MenuButton::clean()
 
 void MenuButton::setCallback(void (*callback)())
 {
+    _ASSERT(callback);
     m_callback = callback;
 }
 

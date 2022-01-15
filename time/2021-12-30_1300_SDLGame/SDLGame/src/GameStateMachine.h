@@ -12,7 +12,9 @@ public:
 
     void update();
     void render();
+    void destroyRemoveCandidates();
 
 private:
     std::vector<GameState*> m_gameStates;
+    std::vector<GameState*> m_removeCandidates;
 };

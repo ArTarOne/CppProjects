@@ -19,6 +19,7 @@ int main(int /*argc*/, char* /*args*/[])
         TheGame::Instance()->handleEvents();
         TheGame::Instance()->update();
         TheGame::Instance()->render();
+        TheGame::Instance()->finalizeIteration();
 
         const Uint32 frameTime = SDL_GetTicks() - frameStart;
         if(frameTime < DELAY_TIME)

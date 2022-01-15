@@ -1,4 +1,6 @@
-﻿#include "GameStateMachine.h"
+﻿#include <iostream>
+
+#include "GameStateMachine.h"
 
 void GameStateMachine::pushState(GameState* pState)
 {
@@ -19,7 +21,7 @@ void GameStateMachine::changeState(GameState* pState)
 
         if(m_gameStates.back()->onExit())
         {
-            delete m_gameStates.back();
+            m_removeCandidates.push_back(m_gameStates.back());
             m_gameStates.pop_back();
         }
     }
@@ -37,7 +39,7 @@ void GameStateMachine::popState()
 
     if(m_gameStates.back()->onExit())
     {
-        delete m_gameStates.back();
+        m_removeCandidates.push_back(m_gameStates.back());
         m_gameStates.pop_back();
     }
 }
@@ -56,4 +58,14 @@ void GameStateMachine::render()
     {
         m_gameStates.back()->render();
     }
+}
+
+void GameStateMachine::destroyRemoveCandidates()
+{
+    for(auto & stateToDelete : m_removeCandidates)
+    {
+        std::cout << "deleting: " << stateToDelete->getStateID() << "\n";
+        delete stateToDelete;
+    }
+    m_removeCandidates.clear();
 }

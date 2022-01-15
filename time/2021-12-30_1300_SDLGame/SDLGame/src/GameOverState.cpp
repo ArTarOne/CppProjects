@@ -3,11 +3,12 @@
 #include "GameOverState.h"
 #include "Game.h"
 #include "MainMenuState.h"
+#include "MenuButton.h"
 #include "PlayState.h"
 #include "StateParser.h"
 #include "TextureManager.h"
 
-const std::string GameOverState::s_gameOverID = "GAME_OVER";
+const std::string GameOverState::s_gameOverID = "GAMEOVER";
 
 void GameOverState::update()
 {
@@ -66,6 +67,14 @@ std::string GameOverState::getStateID() const
 
 void GameOverState::setCallbacks(const std::vector<Callback>& callbacks)
 {
+    for(auto& gameObject : m_gameObjects)
+    {
+        if(dynamic_cast<MenuButton*>(gameObject))
+        {
+            auto* pButton = dynamic_cast<MenuButton*>(gameObject);
+            pButton->setCallback(callbacks[pButton->getCallbackID()]);
+        }
+    }
 }
 
 void GameOverState::s_gameOverToMain()

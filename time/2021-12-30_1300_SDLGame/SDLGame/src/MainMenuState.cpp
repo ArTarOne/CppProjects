@@ -21,8 +21,6 @@ void MainMenuState::update()
 {
     for(auto& gameObject : m_gameObjects)
     {
-        // BUG 0001: game object destroy this state itself and
-        // then try to iterate via non existing vector m_gameObjects
         gameObject->update();
     }
 }
@@ -88,7 +86,6 @@ void MainMenuState::setCallbacks(const std::vector<Callback>& callbacks)
 
 void MainMenuState::s_menuToPlay()
 {
-    // BUG 0001: runtime error. this object destroy itself and still continue run other functions
     TheGame::Instance()->getStateMachine()->changeState(new PlayState());
 }
 

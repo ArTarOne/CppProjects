@@ -108,6 +108,11 @@ bool Game::running() const
     return m_bRunning;
 }
 
+void Game::finalizeIteration()
+{
+    m_pGameStateMachine->destroyRemoveCandidates();
+}
+
 void Game::quit()
 {
     m_bRunning = false;
