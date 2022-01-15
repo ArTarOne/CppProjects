@@ -3,6 +3,7 @@
 #include <map>
 #include <string>
 
+#include "TileLayer.h"
 #include "SDL2/SDL.h"
 
 class TextureManager
@@ -21,8 +22,13 @@ public:
 
     void clearFromTextureMap(std::string id);
 
+    void drawTile(std::string id, int margin, int spacing, int x, int y, int width, int height,
+                  int         currentRow, int currentFrame, SDL_Renderer* pRenderer);
+
 private:
     TextureManager();
+
+private:
     static TextureManager*              s_pInstance;
     std::map<std::string, SDL_Texture*> m_textureMap;
 };

@@ -19,6 +19,8 @@ public:
 
     SDL_Renderer*     getRenderer() const;
     GameStateMachine* getStateMachine();
+    int               getGameWidth() const;
+    int               getGameHeight() const;
 
 private:
     Game();
@@ -30,6 +32,8 @@ private:
     SDL_Renderer*     m_pRenderer = nullptr;
     bool              m_bRunning  = false;
     GameStateMachine* m_pGameStateMachine;
+    int               m_gameWidth;
+    int               m_gameHeight;
 };
 
 typedef Game TheGame;

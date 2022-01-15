@@ -4,6 +4,17 @@
 
 [TOC]
 
+## zlib installation
+
+```
+vcpkg install zlib
+vcpkg integrate install
+```
+
+
+
+
+
 ## Dependencies tree view (for the binary files)
 
 ```

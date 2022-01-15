@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "StateParser.h"
 #include "TextureManager.h"
+#include "LevelParser.h"
 
 const std::string PlayState::s_playID = "PLAY";
 
@@ -18,6 +19,8 @@ PlayState::PlayState()
 
 void PlayState::update()
 {
+    pLevel->update();
+
     if(TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_ESCAPE))
     {
         TheGame::Instance()->getStateMachine()->pushState(new PauseState());
@@ -42,6 +45,9 @@ void PlayState::update()
 
 void PlayState::render()
 {
+    pLevel->render();
+
+    // TODO: should be removed
     for(auto& gameObject : m_gameObjects)
     {
         gameObject->draw();
@@ -51,10 +57,8 @@ void PlayState::render()
 bool PlayState::onEnter()
 {
     std::cout << "entering PlayState\n";
-
-    StateParser stateParser;
-    stateParser.parseState("test.xml", s_playID, &m_gameObjects, &m_textureIDList);
-
+    LevelParser levelParser;
+    pLevel = levelParser.parseLevel("assets/map1.tmx");
     return true;
 }
 

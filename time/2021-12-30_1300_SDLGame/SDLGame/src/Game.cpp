@@ -26,6 +26,9 @@ Game* Game::Instance()
 bool Game::init(const char* title, const int xpos, const int ypos, const int width, int height,
                 const bool  fullscreen)
 {
+    m_gameWidth  = width;
+    m_gameHeight = height;
+
     int flags = 0;
     if(fullscreen)
     {
@@ -126,6 +129,16 @@ SDL_Renderer* Game::getRenderer() const
 GameStateMachine* Game::getStateMachine()
 {
     return m_pGameStateMachine;
+}
+
+int Game::getGameWidth() const
+{
+    return m_gameWidth;
+}
+
+int Game::getGameHeight() const
+{
+    return m_gameHeight;
 }
 
 Game* Game::s_pInstance = nullptr;

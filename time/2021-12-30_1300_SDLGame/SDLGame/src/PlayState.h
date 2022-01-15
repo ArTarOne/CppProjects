@@ -4,6 +4,7 @@
 
 #include "GameObject.h"
 #include "GameState.h"
+#include "LevelParser.h"
 
 class SDLGameObject;
 
@@ -22,4 +23,5 @@ public:
 private:
     static const std::string s_playID;
     std::vector<GameObject*> m_gameObjects;
+    Level*                   pLevel;
 };

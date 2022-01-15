@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\tinyxml2\include\;$(SolutionDir)Dependencies\SDL2\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\tinyxml2\include\;$(SolutionDir)Dependencies\SDL2\include\;$(SolutionDir)Dependencies\base64\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -105,7 +105,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\tinyxml2\include\;$(SolutionDir)Dependencies\SDL2\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\tinyxml2\include\;$(SolutionDir)Dependencies\SDL2\include\;$(SolutionDir)Dependencies\base64\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dependencies\base64\src\base64.cpp" />
     <ClCompile Include="Dependencies\tinyxml2\src\tinyxml2.cpp" />
     <ClCompile Include="src\AnimatedGraphic.cpp" />
     <ClCompile Include="src\Enemy.cpp" />
@@ -159,6 +160,8 @@
     <ClCompile Include="src\GameOverState.cpp" />
     <ClCompile Include="src\GameStateMachine.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
+    <ClCompile Include="src\Level.cpp" />
+    <ClCompile Include="src\LevelParser.cpp" />
     <ClCompile Include="src\LoaderParams.cpp" />
     <ClCompile Include="src\MenuButton.cpp" />
     <ClCompile Include="src\MainMenuState.cpp" />
@@ -169,6 +172,7 @@
     <ClCompile Include="src\SDLGameObject.cpp" />
     <ClCompile Include="src\StateParser.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
+    <ClCompile Include="src\TileLayer.cpp" />
     <ClCompile Include="src\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +185,9 @@
     <ClInclude Include="src\GameState.h" />
     <ClInclude Include="src\GameStateMachine.h" />
     <ClInclude Include="src\InputHandler.h" />
+    <ClInclude Include="src\Layer.h" />
+    <ClInclude Include="src\Level.h" />
+    <ClInclude Include="src\LevelParser.h" />
     <ClInclude Include="src\LoaderParams.h" />
     <ClInclude Include="src\MenuButton.h" />
     <ClInclude Include="src\MainMenuState.h" />
@@ -191,6 +198,7 @@
     <ClInclude Include="src\SDLGameObject.h" />
     <ClInclude Include="src\StateParser.h" />
     <ClInclude Include="src\TextureManager.h" />
+    <ClInclude Include="src\TileLayer.h" />
     <ClInclude Include="src\Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
