@@ -21,9 +21,10 @@ bool StateParser::parseState(const char*               stateFile, const std::str
     std::cout << "xml: start parsing state " << stateID << " in file " << stateFile << "\n";
 
     // xml elements
-    TiXmlElement* pRoot      = xmlDoc.RootElement();
-    TiXmlElement* pStateRoot = nullptr;
-    for(TiXmlElement* e = pRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
+    tinyxml2::XMLElement* pRoot      = xmlDoc.RootElement();
+    tinyxml2::XMLElement* pStateRoot = nullptr;
+    for(tinyxml2::XMLElement* e = pRoot->FirstChildElement(); e != nullptr; e = e->
+        NextSiblingElement())
     {
         if(e->Value() == stateID)
         {
@@ -38,8 +39,8 @@ bool StateParser::parseState(const char*               stateFile, const std::str
     }
 
     // textures
-    TiXmlElement* pTextureRoot = nullptr;
-    for(TiXmlElement* e = pStateRoot->FirstChildElement(); e != nullptr; e = e->
+    tinyxml2::XMLElement* pTextureRoot = nullptr;
+    for(tinyxml2::XMLElement* e = pStateRoot->FirstChildElement(); e != nullptr; e = e->
         NextSiblingElement())
     {
         if(e->Value() == std::string("TEXTURES"))
@@ -58,8 +59,8 @@ bool StateParser::parseState(const char*               stateFile, const std::str
     std::cout << "xml: found " << pTextureIDs->size() << " textures\n";
 
     // objects
-    TiXmlElement* pObjectRoot = nullptr;
-    for(TiXmlElement* e = pStateRoot->FirstChildElement(); e != nullptr; e = e->
+    tinyxml2::XMLElement* pObjectRoot = nullptr;
+    for(tinyxml2::XMLElement* e = pStateRoot->FirstChildElement(); e != nullptr; e = e->
         NextSiblingElement())
     {
         if(e->Value() == std::string("OBJECTS"))
@@ -80,9 +81,9 @@ bool StateParser::parseState(const char*               stateFile, const std::str
     return true;
 }
 
-void StateParser::parseObjects(TiXmlElement* pStateRoot, std::vector<GameObject*>* pObjects)
+void StateParser::parseObjects(tinyxml2::XMLElement* pStateRoot, std::vector<GameObject*>* pObjects)
 {
-    for(TiXmlElement* e = pStateRoot->FirstChildElement(); e != nullptr; e = e->
+    for(tinyxml2::XMLElement* e = pStateRoot->FirstChildElement(); e != nullptr; e = e->
         NextSiblingElement())
     {
         int         x           = e->IntAttribute("x");
@@ -106,9 +107,10 @@ void StateParser::parseObjects(TiXmlElement* pStateRoot, std::vector<GameObject*
     }
 }
 
-void StateParser::parseTextures(TiXmlElement* pStateRoot, std::vector<std::string>* pTextureIDs)
+void StateParser::parseTextures(tinyxml2::XMLElement*     pStateRoot,
+                                std::vector<std::string>* pTextureIDs)
 {
-    for(TiXmlElement* e = pStateRoot->FirstChildElement(); e != nullptr; e = e->
+    for(tinyxml2::XMLElement* e = pStateRoot->FirstChildElement(); e != nullptr; e = e->
         NextSiblingElement())
     {
         std::string filenameAttribute = e->Attribute("filename");

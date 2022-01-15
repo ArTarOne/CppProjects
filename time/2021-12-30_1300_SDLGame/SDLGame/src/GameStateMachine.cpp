@@ -62,7 +62,7 @@ void GameStateMachine::render()
 
 void GameStateMachine::destroyRemoveCandidates()
 {
-    for(auto & stateToDelete : m_removeCandidates)
+    for(auto& stateToDelete : m_removeCandidates)
     {
         std::cout << "deleting: " << stateToDelete->getStateID() << "\n";
         delete stateToDelete;
