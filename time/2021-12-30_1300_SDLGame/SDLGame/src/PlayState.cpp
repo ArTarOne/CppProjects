@@ -46,8 +46,7 @@ void PlayState::update()
 void PlayState::render()
 {
     pLevel->render();
-
-    // TODO: should be removed
+    
     for(auto& gameObject : m_gameObjects)
     {
         gameObject->draw();
@@ -59,6 +58,8 @@ bool PlayState::onEnter()
     std::cout << "entering PlayState\n";
     LevelParser levelParser;
     pLevel = levelParser.parseLevel("assets/map1.tmx");
+    StateParser stateParser;
+    stateParser.parseState("test.xml", s_playID, &m_gameObjects, &m_textureIDList);
     return true;
 }
 
