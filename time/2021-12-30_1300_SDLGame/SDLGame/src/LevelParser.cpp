@@ -6,6 +6,11 @@
 
 #include "TileLayer.h"
 
+/**
+ * \brief read level from xml file
+ * \param levelFile - *.tmx file name
+ * \return pointer to the new level
+ */
 Level* LevelParser::parseLevel(const char* levelFile)
 {
     tinyxml2::XMLDocument levelDocument;
@@ -39,37 +44,77 @@ Level* LevelParser::parseLevel(const char* levelFile)
     return pLevel;
 }
 
+inline std::string addAssetFolderPrefix(const std::string& filename)
+{
+    // TODO hardcoded assets folder name
+    return std::string("assets/") + filename;
+}
+
+/**
+ * \brief read <tileset> section for *.map file. And file of blocks like *.tsx
+ *
+ * map.tmx:
+ * <tileset firstgid="1" source="blocks1.tsx"/>
+ *
+ * blocks.tsx:
+ * <tileset version="1.5" tiledversion="1.7.2" name="blocks1" tilewidth="32" tileheight="32"
+ *   spacing="2" margin="2" tilecount="198" columns="18">
+ *     <image source="blocks1.png" width="614" height="376"/>
+ * </tileset>
+ *
+ * \param pTilesetRoot <tileset> tag
+ * \param pTilesets [out] vector to store tilesets
+ */
 void LevelParser::parseTilesets(tinyxml2::XMLElement* pTilesetRoot, std::vector<Tileset>* pTilesets)
 {
-    TheTextureManager::Instance()->load(pTilesetRoot->FirstChildElement()->Attribute("source"),
-                                        pTilesetRoot->Attribute("name"),
-                                        TheGame::Instance()->getRenderer());
+    tinyxml2::XMLDocument blockDocument;
+    std::string blockDocumentName = addAssetFolderPrefix(pTilesetRoot->Attribute("source"));
+    blockDocument.LoadFile(blockDocumentName.c_str());
 
-    // TODO - in this example we read only the map file. But block files also should be read.
-    // see next files:
-    //   blocks1.tsx
-    //   blocks2.tsx
+    tinyxml2::XMLElement* pBlockRoot = blockDocument.RootElement();
 
-    // my version // TODO
-    // <tileset firstgid="1" source="blocks1.tsx"/> 
-
-    // example version
-    // <tileset firstgid="1" name="blocks1" tilewidth="32" tileheight="32" spacing="2" margin="2">
-    //     <image source="blocks1.png" width="614" height="376"/>
-    // </tileset>
+    TheTextureManager::Instance()->load(
+        addAssetFolderPrefix(pBlockRoot->FirstChildElement()->Attribute("source")),
+        pBlockRoot->Attribute("name"),
+        TheGame::Instance()->getRenderer());
 
     Tileset tileset;
-    tileset.width       = pTilesetRoot->FirstChildElement()->IntAttribute("width");
-    tileset.height      = pTilesetRoot->FirstChildElement()->IntAttribute("height");
+    tileset.width       = pBlockRoot->FirstChildElement()->IntAttribute("width");
+    tileset.height      = pBlockRoot->FirstChildElement()->IntAttribute("height");
     tileset.firstGridID = pTilesetRoot->IntAttribute("firstgid");
-    tileset.tileWidth   = pTilesetRoot->IntAttribute("tilewidth");
-    tileset.tileHeight  = pTilesetRoot->IntAttribute("tileheight");
-    tileset.spacing     = pTilesetRoot->IntAttribute("spacing");
-    tileset.margin      = pTilesetRoot->IntAttribute("margin");
-    tileset.name        = pTilesetRoot->Attribute("name");
+    tileset.tileWidth   = pBlockRoot->IntAttribute("tilewidth");
+    tileset.tileHeight  = pBlockRoot->IntAttribute("tileheight");
+    tileset.spacing     = pBlockRoot->IntAttribute("spacing");
+    tileset.margin      = pBlockRoot->IntAttribute("margin");
+    tileset.name        = pBlockRoot->Attribute("name");
     tileset.numColumns  = tileset.width / (tileset.tileWidth + tileset.spacing);
 
     pTilesets->push_back(tileset);
+}
+
+// TODO - move to utils folder
+// https://stackoverflow.com/questions/216823/how-to-trim-a-stdstring
+std::string specialTrim(const std::string& dirtyString)
+{
+    std::string resultString = dirtyString;
+    resultString.erase(resultString.begin(),
+                       std::find_if(resultString.begin(),
+                                    resultString.end(),
+                                    [](unsigned char ch)
+                                    {
+                                        return !std::isspace(ch);
+                                    }));
+
+    // TODO: magic - fragile code
+    resultString.erase(std::find_if(resultString.rbegin(),
+                                    resultString.rend(),
+                                    [](unsigned char ch)
+                                    {
+                                        return (ch == '=');
+                                    }).base(),
+                       resultString.end());
+
+    return resultString;
 }
 
 void LevelParser::parseTileLayer(tinyxml2::XMLElement* pTileElement, std::vector<Layer*>* pLayers,
@@ -93,9 +138,9 @@ void LevelParser::parseTileLayer(tinyxml2::XMLElement* pTileElement, std::vector
 
     for(tinyxml2::XMLNode* e = pDataNode->FirstChild(); e != nullptr; e = e->NextSibling())
     {
-        tinyxml2::XMLText* text = e->ToText();
-        std::string        t    = text->Value();
-        decodedIDs              = base64_decode(t);
+        tinyxml2::XMLText* text                    = e->ToText();
+        std::string        layer_data_encoded_text = specialTrim(text->Value());
+        decodedIDs                                 = base64_decode(layer_data_encoded_text);
     }
 
     // uncompress zlib compression
