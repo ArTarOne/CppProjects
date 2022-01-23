@@ -1,7 +1,7 @@
 ﻿#include "LevelParser.h"
 #include "Game.h"
 #include "TextureManager.h"
-#include <base64.h>
+#include <cpp-base64/base64.h>
 #include <zlib.h>
 
 #include "TileLayer.h"

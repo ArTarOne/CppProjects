@@ -63,9 +63,6 @@
     <ClCompile Include="src\GameOverState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\tinyxml2\src\tinyxml2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameObjectFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -81,7 +78,7 @@
     <ClCompile Include="src\LevelParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\base64\src\base64.cpp">
+    <ClCompile Include="$(VcpkgRoot)\packages\cpp-base64_x86-windows\include\cpp-base64\base64.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

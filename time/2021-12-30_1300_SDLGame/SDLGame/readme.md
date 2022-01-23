@@ -1,15 +1,35 @@
-# Settings
+# SDL Game Development (Mitchell)
 
 
 
 [TOC]
 
+# Settings
+
 ## zlib installation
 
 ```
 vcpkg install zlib
+vcpkg install sdl2
+vcpkg install sdl2-image
+vcpkg install cpp-base64
+vcpkg install tinyxml2
 vcpkg integrate install
 ```
+
+## Define macros for project
+
+```
+SDL_MAIN_HANDLED
+```
+
+
+
+
+
+
+
+# Old Style Settings (without vcpkg)
 
 
 
@@ -33,6 +53,10 @@ SDL2
       SDL2main.lib
 ```
 
+
+
+
+
 ## Output tree view
 
 ```
@@ -45,6 +69,10 @@ zlib1.dll
 SDLGame.exe
 ```
 
+
+
+
+
 ## SDL2_Image
 
 ```
@@ -54,6 +82,10 @@ $(SolutionDir)..\..\..\Dependencies\SDL2\include\SDL2;
 Additional Library Directories
 $(SolutionDir)..\..\..\Dependencies\SDL2\$(Platform)\$(Configuration)
 ```
+
+
+
+
 
 ### Troubleshooting
 
