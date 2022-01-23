@@ -101,8 +101,8 @@ void Game::clean() const
 {
     std::cout << "cleaning game\n";
     TheInputHandler::Instance()->clean();
-    SDL_DestroyWindow(m_pWindow);
     SDL_DestroyRenderer(m_pRenderer);
+    SDL_DestroyWindow(m_pWindow);
     SDL_Quit();
 }
 
