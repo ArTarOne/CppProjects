@@ -5,6 +5,7 @@
 #include <zlib.h>
 
 #include "TileLayer.h"
+#include "Utils.h"
 
 /**
  * \brief read level from xml file
@@ -92,31 +93,6 @@ void LevelParser::parseTilesets(tinyxml2::XMLElement* pTilesetRoot, std::vector<
     pTilesets->push_back(tileset);
 }
 
-// TODO - move to utils folder
-// https://stackoverflow.com/questions/216823/how-to-trim-a-stdstring
-std::string specialTrim(const std::string& dirtyString)
-{
-    std::string resultString = dirtyString;
-    resultString.erase(resultString.begin(),
-                       std::find_if(resultString.begin(),
-                                    resultString.end(),
-                                    [](unsigned char ch)
-                                    {
-                                        return !std::isspace(ch);
-                                    }));
-
-    // TODO: magic - fragile code
-    resultString.erase(std::find_if(resultString.rbegin(),
-                                    resultString.rend(),
-                                    [](unsigned char ch)
-                                    {
-                                        return (ch == '=');
-                                    }).base(),
-                       resultString.end());
-
-    return resultString;
-}
-
 void LevelParser::parseTileLayer(tinyxml2::XMLElement* pTileElement, std::vector<Layer*>* pLayers,
                                  const std::vector<Tileset>* pTilesets)
 {
@@ -139,7 +115,7 @@ void LevelParser::parseTileLayer(tinyxml2::XMLElement* pTileElement, std::vector
     for(tinyxml2::XMLNode* e = pDataNode->FirstChild(); e != nullptr; e = e->NextSibling())
     {
         tinyxml2::XMLText* text                    = e->ToText();
-        std::string        layer_data_encoded_text = specialTrim(text->Value());
+        std::string        layer_data_encoded_text = utils::trim(text->Value());
         decodedIDs                                 = base64_decode(layer_data_encoded_text);
     }
 
