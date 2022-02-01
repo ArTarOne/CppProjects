@@ -198,6 +198,7 @@
     <ClInclude Include="src\StateParser.h" />
     <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\TileLayer.h" />
+    <ClInclude Include="src\Utils.h" />
     <ClInclude Include="src\Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
