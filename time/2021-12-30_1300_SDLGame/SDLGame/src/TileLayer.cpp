@@ -19,6 +19,11 @@ TileLayer::TileLayer(int tileSize, const std::vector<Tileset>& tilesets)
 void TileLayer::update()
 {
     m_position += m_velocity;
+    const auto maxTopLeftXOnMap = (m_tileIDs[0].size() - m_numColumns) * m_tileSize;
+    if(m_position.getX() > maxTopLeftXOnMap)
+    {
+        m_position.setX(maxTopLeftXOnMap);
+    }
     m_velocity.setX(1); // TODO
 }
 
@@ -31,7 +36,19 @@ void TileLayer::render()
 
     for(int i = 0; i < m_numRows; i++)
     {
-        for(int j = 0; j < m_numColumns; j++)
+        int numColumnsRespectMoving;
+        if(x2 == 0)
+        {
+            numColumnsRespectMoving = m_numColumns;
+        }
+        else
+        {
+            // increase because of 2 incomplete tiles
+            // one on the left, one on the right of screen
+            numColumnsRespectMoving = m_numColumns + 1; 
+        }
+
+        for(int j = 0; j < numColumnsRespectMoving; j++)
         {
             int id = m_tileIDs[i][j + x];
             if(id == 0)
