@@ -81,11 +81,15 @@ bool StateParser::parseState(const char*               stateFile, const std::str
     return true;
 }
 
+#include "C:/Users/marle/Downloads/_bookmarks/Scripts/cpp_utils/tyulenev_debug_utils.hpp" // TYULENEV_DEBUG
+
 void StateParser::parseObjects(tinyxml2::XMLElement* pStateRoot, std::vector<GameObject*>* pObjects)
 {
     for(tinyxml2::XMLElement* e = pStateRoot->FirstChildElement(); e != nullptr; e = e->
         NextSiblingElement())
     {
+        TYULENEV_DEBUG(<< TYULENEV_PAIR(pObjects)); // TYULENEV_DEBUG
+
         int         x           = e->IntAttribute("x");
         int         y           = e->IntAttribute("y");
         int         width       = e->IntAttribute("width");

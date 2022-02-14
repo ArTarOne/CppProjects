@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="60" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="60" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="10">
+ <properties>
+  <property name="helicopter" value="helicopter.png"/>
+ </properties>
  <tileset firstgid="1" source="blocks1.tsx"/>
  <tileset firstgid="199" source="blocks2.tsx"/>
  <layer id="1" name="Tile Layer 1" width="60" height="15">
@@ -7,4 +10,14 @@
    eJzVlUlOwzAYhZ0N7FgB6cQBGC/AeAKGC0AljsC0ZaoZ78F8H9hSxKKUHSCEWPB+1VZ+TJzUiSPgSZ9i//HwXuM0QvjRrad1lsEKqHtar6h9Wxnm+JbL/nm9fnY5zsdv4rpGEXv2Bf7WSqu7rOHTD5f5/vo+20W8K3nOSavgvdZwftZznCHfSnt/8z6fBrJKlbeCaxXUwDsbw+ukj5iaL7l8j8aw9ziYcPBQAmVQAVVQy9AfcvBIkgrSMLyOgFHl2eU8z2DOLJhjee9BEzwkzOsHA2AQhBn6aeL5zP4kvE6BaeW52++R1pLxbF/AK3hLmEP+nxShpd9OuK+1gL0XgyiTVlJe0jzz7Po9Wo0Z3xtT497I/534medZ2PNTuy2+5+X/BZRHv+PS0u8JOtTBJtgKolqcSqiH4FF0rsRGELUJGlM2aoT2Rm0f53kb7IBdhWR9nU+Pkcb9PbBvtBtG1jNwDi7AJbgC1+Dml+oH4BAcgWNwAk4tdV6zzfvr0r5N/7Y8vG3e+w95vwDCnohz
   </data>
  </layer>
+ <objectgroup id="3" name="Object Layer 1">
+  <object id="9" name="Helicopter1" type="Player" x="32" y="322" width="38" height="78">
+   <properties>
+    <property name="numFrames" value="4"/>
+    <property name="textureHeight" value="55"/>
+    <property name="textureID" value="helicopter"/>
+    <property name="textureWidth" value="128"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

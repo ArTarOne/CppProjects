@@ -164,6 +164,7 @@
     <ClCompile Include="src\LoaderParams.cpp" />
     <ClCompile Include="src\MenuButton.cpp" />
     <ClCompile Include="src\MainMenuState.cpp" />
+    <ClCompile Include="src\ObjectLayer.cpp" />
     <ClCompile Include="src\PauseState.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\PlayState.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="src\MenuButton.h" />
     <ClInclude Include="src\MainMenuState.h" />
     <ClInclude Include="src\MenuState.h" />
+    <ClInclude Include="src\ObjectLayer.h" />
     <ClInclude Include="src\PauseState.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\PlayState.h" />
