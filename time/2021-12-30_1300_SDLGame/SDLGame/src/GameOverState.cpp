@@ -31,7 +31,7 @@ bool GameOverState::onEnter()
     std::cout << "entering PauseState\n";
 
     StateParser stateParser;
-    stateParser.parseState("test.xml", s_gameOverID, &m_gameObjects, &m_textureIDList);
+    stateParser.parseState("menu_states.xml", s_gameOverID, &m_gameObjects, &m_textureIDList);
 
     m_callbacks.push_back(nullptr);
     m_callbacks.push_back(s_gameOverToMain);
