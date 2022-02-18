@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <string>
+#include <fstream>
 
 namespace utils
 {
@@ -40,5 +41,24 @@ inline std::string trim(const std::string& s)
     auto copy = s;
     trimInPlace(copy);
     return copy;
+}
+
+inline bool fileExists(const std::string& name)
+{
+    std::ifstream file(name.c_str());
+    return file.good();
+}
+
+inline std::string deepSearch(const std::string& filename)
+{
+    if(fileExists(filename))
+    {
+        return filename;
+    }
+
+    // TODO hardcoded assets folder name
+    std::string newFileName = std::string("assets/") + filename;
+    _ASSERT(fileExists(newFileName));
+    return newFileName;
 }
 }

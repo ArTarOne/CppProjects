@@ -5,13 +5,14 @@
 #include "GameObjectFactory.h"
 #include "LoaderParams.h"
 #include "TextureManager.h"
+#include "Utils.h"
 
 bool StateParser::parseState(const char*               stateFile, const std::string& stateID,
                              std::vector<GameObject*>* pObjects,
                              std::vector<std::string>* pTextureIDs)
 {
     tinyxml2::XMLDocument xmlDoc;
-    if(xmlDoc.LoadFile(stateFile) != tinyxml2::XML_SUCCESS)
+    if(xmlDoc.LoadFile(utils::deepSearch(stateFile).c_str()) != tinyxml2::XML_SUCCESS)
     {
         std::cerr << "Error loading xml file " << stateFile << ". Error: " << xmlDoc.ErrorID() <<
             "\n";
@@ -81,15 +82,11 @@ bool StateParser::parseState(const char*               stateFile, const std::str
     return true;
 }
 
-#include "C:/Users/marle/Downloads/_bookmarks/Scripts/cpp_utils/tyulenev_debug_utils.hpp" // TYULENEV_DEBUG
-
 void StateParser::parseObjects(tinyxml2::XMLElement* pStateRoot, std::vector<GameObject*>* pObjects)
 {
     for(tinyxml2::XMLElement* e = pStateRoot->FirstChildElement(); e != nullptr; e = e->
         NextSiblingElement())
     {
-        TYULENEV_DEBUG(<< TYULENEV_PAIR(pObjects)); // TYULENEV_DEBUG
-
         int         x           = e->IntAttribute("x");
         int         y           = e->IntAttribute("y");
         int         width       = e->IntAttribute("width");

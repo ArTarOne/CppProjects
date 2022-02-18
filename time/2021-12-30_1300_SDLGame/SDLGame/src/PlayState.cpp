@@ -1,15 +1,13 @@
 ﻿#include <iostream>
 
 #include "PlayState.h"
-#include "Enemy.h"
 #include "Game.h"
 #include "GameOverState.h"
 #include "InputHandler.h"
 #include "PauseState.h"
-#include "Player.h"
-#include "StateParser.h"
 #include "TextureManager.h"
 #include "LevelParser.h"
+#include "Utils.h"
 
 const std::string PlayState::s_playID = "PLAY";
 
@@ -36,9 +34,7 @@ bool PlayState::onEnter()
 {
     std::cout << "entering PlayState\n";
     LevelParser levelParser;
-    pLevel = levelParser.parseLevel("assets/map1.tmx");
-    //StateParser stateParser;
-    //stateParser.parseState("test.xml", s_playID, &m_gameObjects, &m_textureIDList);
+    pLevel = levelParser.parseLevel(utils::deepSearch("map1.tmx").c_str());
     return true;
 }
 

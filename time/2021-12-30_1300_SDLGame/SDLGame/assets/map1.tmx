@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="60" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="10">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="60" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="11">
  <properties>
   <property name="helicopter" value="helicopter.png"/>
+  <property name="helicopter2" value="helicopter2.png"/>
  </properties>
  <tileset firstgid="1" source="blocks1.tsx"/>
  <tileset firstgid="199" source="blocks2.tsx"/>
@@ -11,11 +12,19 @@
   </data>
  </layer>
  <objectgroup id="3" name="Object Layer 1">
-  <object id="9" name="Helicopter1" type="Player" x="32" y="322" width="38" height="78">
+  <object id="9" name="Helicopter1" type="Player" x="67" y="160" width="38" height="78">
    <properties>
     <property name="numFrames" value="4"/>
     <property name="textureHeight" value="55"/>
     <property name="textureID" value="helicopter"/>
+    <property name="textureWidth" value="128"/>
+   </properties>
+  </object>
+  <object id="10" name="Helicopter2" type="Enemy" x="352" y="193" width="38" height="32">
+   <properties>
+    <property name="numFrames" value="4"/>
+    <property name="textureHeight" value="55"/>
+    <property name="textureID" value="helicopter2"/>
     <property name="textureWidth" value="128"/>
    </properties>
   </object>

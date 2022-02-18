@@ -72,4 +72,4 @@ private:
     const Uint8* m_pKeystates = nullptr;
 };
 
-typedef InputHandler TheInputHandler;
+using TheInputHandler = InputHandler;

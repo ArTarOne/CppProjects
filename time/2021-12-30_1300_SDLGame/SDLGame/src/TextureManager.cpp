@@ -3,6 +3,7 @@
 #include <SDL2/SDL_image.h>
 
 #include "TextureManager.h"
+#include "Utils.h"
 
 TextureManager* TextureManager::Instance()
 {
@@ -17,7 +18,7 @@ TextureManager* TextureManager::Instance()
 bool TextureManager::load(const std::string& fileName, const std::string& id,
                           SDL_Renderer*      pRenderer)
 {
-    SDL_Surface* pTempSurface = IMG_Load(fileName.c_str());
+    SDL_Surface* pTempSurface = IMG_Load(utils::deepSearch(fileName).c_str());
     if(pTempSurface == nullptr)
     {
         std::cout << "IMG_Load fail, IMG_GetError() = " << IMG_GetError() << std::endl;
@@ -32,6 +33,7 @@ bool TextureManager::load(const std::string& fileName, const std::string& id,
         return false;
     }
 
+    _ASSERT(pTexture);
     m_textureMap[id] = pTexture;
     return true;
 }
@@ -62,6 +64,7 @@ void TextureManager::drawFrame(const std::string& id, int x, int y, int width, i
     srcRect.h  = destRect.h = height;
     destRect.x = x;
     destRect.y = y;
+    _ASSERT(m_textureMap[id]);
     SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, nullptr, flip);
 }
 

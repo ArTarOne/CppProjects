@@ -36,4 +36,4 @@ private:
     int               m_gameHeight;
 };
 
-typedef Game TheGame;
+using TheGame = Game;

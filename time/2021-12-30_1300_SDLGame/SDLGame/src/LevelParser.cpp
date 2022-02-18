@@ -1,4 +1,5 @@
-﻿#include <iostream>
+﻿#include <fstream>
+#include <iostream>
 
 #include "LevelParser.h"
 #include "Game.h"
@@ -11,8 +12,6 @@
 #include "TileLayer.h"
 #include "Utils.h"
 #include "LoaderParams.h"
-#include "C:/Users/marle/Downloads/_bookmarks/Scripts/cpp_utils/tyulenev_debug_utils.hpp" // TYULENEV_DEBUG
-
 
 /**
  * \brief read level from xml file
@@ -42,16 +41,6 @@ Level* LevelParser::parseLevel(const char* levelFile)
         }
     }
 
-    // xml:<map><layer>
-    for(tinyxml2::XMLElement* e = pRoot->FirstChildElement(); e != nullptr; e = e->
-        NextSiblingElement())
-    {
-        if(e->Value() == std::string("layer"))
-        {
-            parseTileLayer(e, pLevel->getLayers(), pLevel->getTilesets());
-        }
-    }
-
     // xml:<map><properties> - load Textures
     for(tinyxml2::XMLElement* e = pRoot->FirstChildElement(); e != nullptr; e = e->
         NextSiblingElement())
@@ -59,6 +48,16 @@ Level* LevelParser::parseLevel(const char* levelFile)
         if(e->Value() == std::string("properties"))
         {
             parseTextures(e);
+        }
+    }
+
+    // xml:<map><layer>
+    for(tinyxml2::XMLElement* e = pRoot->FirstChildElement(); e != nullptr; e = e->
+        NextSiblingElement())
+    {
+        if(e->Value() == std::string("layer"))
+        {
+            parseTileLayer(e, pLevel->getLayers(), pLevel->getTilesets());
         }
     }
 
@@ -87,12 +86,6 @@ Level* LevelParser::parseLevel(const char* levelFile)
     return pLevel;
 }
 
-inline std::string addAssetFolderPrefix(const std::string& filename)
-{
-    // TODO hardcoded assets folder name
-    return std::string("assets/") + filename;
-}
-
 /**
  * \brief read <tileset> section for *.map file. And file of blocks like *.tsx
  *
@@ -111,13 +104,13 @@ inline std::string addAssetFolderPrefix(const std::string& filename)
 void LevelParser::parseTilesets(tinyxml2::XMLElement* pTilesetRoot, std::vector<Tileset>* pTilesets)
 {
     tinyxml2::XMLDocument blockDocument;
-    std::string blockDocumentName = addAssetFolderPrefix(pTilesetRoot->Attribute("source"));
+    std::string           blockDocumentName = utils::deepSearch(pTilesetRoot->Attribute("source"));
     blockDocument.LoadFile(blockDocumentName.c_str());
 
     tinyxml2::XMLElement* pBlockRoot = blockDocument.RootElement(); // blocks.tsx:<tileset>
 
     auto image = pBlockRoot->FirstChildElement();
-    TheTextureManager::Instance()->load(addAssetFolderPrefix(image->Attribute("source")),
+    TheTextureManager::Instance()->load(image->Attribute("source"),
                                         pBlockRoot->Attribute("name"),
                                         TheGame::Instance()->getRenderer());
 
@@ -204,10 +197,13 @@ void LevelParser::parseTileLayer(tinyxml2::XMLElement* pTileElement, std::vector
  */
 void LevelParser::parseTextures(tinyxml2::XMLElement* pMapProperties)
 {
-    auto property = pMapProperties->FirstChildElement();
-    auto fileName = addAssetFolderPrefix(property->Attribute("value"));
-    auto id       = addAssetFolderPrefix(property->Attribute("name"));
-    TheTextureManager::Instance()->load(fileName, id, TheGame::Instance()->getRenderer());
+    for(auto* property = pMapProperties->FirstChildElement(); property != nullptr; property =
+        property->NextSiblingElement())
+    {
+        auto fileName = property->Attribute("value");
+        auto id       = property->Attribute("name");
+        TheTextureManager::Instance()->load(fileName, id, TheGame::Instance()->getRenderer());
+    }
 }
 
 /**
@@ -295,7 +291,6 @@ void LevelParser::parseObjectLayer(tinyxml2::XMLElement* pObjectElement,
                                                numFrames,
                                                callbackID,
                                                animSpeed));
-            TYULENEV_DEBUG(<< TYULENEV_PAIR(pObjectLayer->getGameObjects())); // TYULENEV_DEBUG
             pObjectLayer->getGameObjects()->push_back(pGameObject);
         }
     }
