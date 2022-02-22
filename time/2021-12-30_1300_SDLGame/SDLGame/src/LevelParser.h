@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <tinyxml2.h>
 
+#include "GameObject.h"
 #include "Level.h"
 
 /**
@@ -22,6 +23,7 @@ private:
                         const std::vector<Tileset>* pTilesets);
     void parseTextures(tinyxml2::XMLElement* pMapProperties);
     void parseObjectLayer(tinyxml2::XMLElement* pObjectElement, std::vector<Layer*>* pLayers);
+    GameObject* parseTypedGameObject(tinyxml2::XMLElement* pTypedObject);
 
 private:
     int m_tileSize;

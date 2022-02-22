@@ -21,12 +21,12 @@ Level* LevelParser::parseLevel(const char* levelFile)
     Level*                pLevel = new Level();
     tinyxml2::XMLElement* pRoot  = levelDocument.RootElement(); // <map>
 
-    // xml:<map>
+    // map.xml:<map>
     m_tileSize = pRoot->IntAttribute("tilewidth");
     m_width    = pRoot->IntAttribute("width");
     m_height   = pRoot->IntAttribute("height");
 
-    // xml:<map><tileset>
+    // map.xml:<map><tileset>
     for(tinyxml2::XMLElement* e = pRoot->FirstChildElement(); e != nullptr; e = e->
         NextSiblingElement())
     {
@@ -36,7 +36,7 @@ Level* LevelParser::parseLevel(const char* levelFile)
         }
     }
 
-    // xml:<map><properties> - load Textures
+    // map.xml:<map><properties> - load Textures
     for(tinyxml2::XMLElement* e = pRoot->FirstChildElement(); e != nullptr; e = e->
         NextSiblingElement())
     {
@@ -46,7 +46,7 @@ Level* LevelParser::parseLevel(const char* levelFile)
         }
     }
 
-    // xml:<map><layer>
+    // map.xml:<map><layer>
     for(tinyxml2::XMLElement* e = pRoot->FirstChildElement(); e != nullptr; e = e->
         NextSiblingElement())
     {
@@ -59,7 +59,7 @@ Level* LevelParser::parseLevel(const char* levelFile)
     for(tinyxml2::XMLElement* e = pRoot->FirstChildElement(); e != nullptr; e = e->
         NextSiblingElement())
     {
-        // xml:<map><objectgroup><object>
+        // map.xml:<map><objectgroup><object>
         if(e->Value() == std::string("objectgroup"))
         {
             if(e->FirstChildElement()->Value() == std::string("object"))
@@ -68,7 +68,7 @@ Level* LevelParser::parseLevel(const char* levelFile)
             }
         }
 
-        // xml:<map><layer><data>
+        // map.xml:<map><layer><data>
         if(e->Value() == std::string("layer"))
         {
             if(e->FirstChildElement()->Value() == std::string("data"))
@@ -130,7 +130,7 @@ void LevelParser::parseTilesets(tinyxml2::XMLElement* pTilesetRoot, std::vector<
  *   w95vwDCnohzeJzVlUlOwzAYhZ0N7FgB6cQBGC
  *  </data>
  * </layer>
- * \param pTileElement [in] xml:<layer>
+ * \param pTileElement [in] map.xml:<layer>
  * \param pLayers [out]
  * \param pTilesets [in]
  */
@@ -188,7 +188,7 @@ void LevelParser::parseTileLayer(tinyxml2::XMLElement* pTileElement, std::vector
  * <properties>
  *  <property name="helicopter" value="helicopter.png"/>
  * </properties>
- * \param pMapProperties [in] xml:<properties>
+ * \param pMapProperties [in] map.xml:<properties>
  */
 void LevelParser::parseTextures(tinyxml2::XMLElement* pMapProperties)
 {
@@ -213,7 +213,7 @@ void LevelParser::parseTextures(tinyxml2::XMLElement* pMapProperties)
  *   </properties>
  *  </object>
  * </objectgroup>
- * \param pObjectElement [in] xml:<map><objectgroup>
+ * \param pObjectElement [in] map.xml:<map><objectgroup>
  * \param pLayers [out]
  */
 void LevelParser::parseObjectLayer(tinyxml2::XMLElement* pObjectElement,
@@ -227,67 +227,90 @@ void LevelParser::parseObjectLayer(tinyxml2::XMLElement* pObjectElement,
     {
         if(e->Value() == std::string("object"))
         {
-            int         width{};
-            int         height{};
-            int         numFrames{};
-            int         callbackID{};
-            int         animSpeed{};
-            std::string textureID{};
+            auto type = e->Attribute("type");
+            GameObject* pGameObject;
 
-            int x = e->IntAttribute("x");
-            int y = e->IntAttribute("y");
-
-            GameObject* pGameObject = TheGameObjectFactory::Instance()->
-                create(e->Attribute("type"));
-
-            for(auto* properties = e->FirstChildElement(); properties != nullptr; properties =
-                properties->NextSiblingElement())
+            if(type)
             {
-                if(properties->Value() == std::string("properties"))
-                {
-                    for(auto* property = properties->FirstChildElement(); property != nullptr;
-                        property       = property->NextSiblingElement())
-                    {
-                        if(property->Value() == std::string("property"))
-                        {
-                            if(property->Attribute("name") == std::string("numFrames"))
-                            {
-                                numFrames = property->IntAttribute("value");
-                            }
-                            else if(property->Attribute("name") == std::string("textureHeight"))
-                            {
-                                height = property->IntAttribute("value");
-                            }
-                            else if(property->Attribute("name") == std::string("textureID"))
-                            {
-                                textureID = property->Attribute("value");
-                            }
-                            else if(property->Attribute("name") == std::string("textureWidth"))
-                            {
-                                width = property->IntAttribute("value");
-                            }
-                            else if(property->Attribute("name") == std::string("callbackID"))
-                            {
-                                callbackID = property->IntAttribute("value");
-                            }
-                            else if(property->Attribute("name") == std::string("animSpeed"))
-                            {
-                                animSpeed = property->IntAttribute("value");
-                            }
-                        }
-                    }
-                }
+                pGameObject = parseTypedGameObject(e);
             }
-            pGameObject->load(new LoaderParams(x,
-                                               y,
-                                               width,
-                                               height,
-                                               textureID,
-                                               numFrames,
-                                               callbackID,
-                                               animSpeed));
+            else
+            {
+                // TODO parse poligon (not-typed object)
+                continue;
+            }
+
             pObjectLayer->getGameObjects()->push_back(pGameObject);
         }
     }
     pLayers->push_back(pObjectLayer);
+}
+
+/**
+ * \brief parse object which contained type:
+ * map.xml:<map><objectgroup><object type="something">
+ * \param pTypedObject [out]
+ * \return GameObject*. nullprt in case of error
+ */
+GameObject* LevelParser::parseTypedGameObject(tinyxml2::XMLElement* pTypedObject)
+{
+    GameObject* pGameObject = TheGameObjectFactory::Instance()->create(pTypedObject->Attribute("type"));
+
+    int         x = pTypedObject->IntAttribute("x");
+    int         y = pTypedObject->IntAttribute("y");
+    int         width{};
+    int         height{};
+    int         numFrames{};
+    int         callbackID{};
+    int         animSpeed{};
+    std::string textureID{};
+
+    for(auto* properties = pTypedObject->FirstChildElement(); properties != nullptr; properties =
+        properties->NextSiblingElement())
+    {
+        if(properties->Value() == std::string("properties"))
+        {
+            for(auto* property = properties->FirstChildElement(); property != nullptr;
+                property       = property->NextSiblingElement())
+            {
+                if(property->Value() == std::string("property"))
+                {
+                    if(property->Attribute("name") == std::string("numFrames"))
+                    {
+                        numFrames = property->IntAttribute("value");
+                    }
+                    else if(property->Attribute("name") == std::string("textureHeight"))
+                    {
+                        height = property->IntAttribute("value");
+                    }
+                    else if(property->Attribute("name") == std::string("textureID"))
+                    {
+                        textureID = property->Attribute("value");
+                    }
+                    else if(property->Attribute("name") == std::string("textureWidth"))
+                    {
+                        width = property->IntAttribute("value");
+                    }
+                    else if(property->Attribute("name") == std::string("callbackID"))
+                    {
+                        callbackID = property->IntAttribute("value");
+                    }
+                    else if(property->Attribute("name") == std::string("animSpeed"))
+                    {
+                        animSpeed = property->IntAttribute("value");
+                    }
+                }
+            }
+        }
+    }
+    pGameObject->load(new LoaderParams(x,
+                                       y,
+                                       width,
+                                       height,
+                                       textureID,
+                                       numFrames,
+                                       callbackID,
+                                       animSpeed));
+
+    return pGameObject;
 }
