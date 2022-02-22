@@ -26,6 +26,7 @@ vcpkg install sdl2
 vcpkg install sdl2-image
 vcpkg install cpp-base64
 vcpkg install tinyxml2
+vcpkg install sdl2-mixer
 vcpkg integrate install
 ```
 
