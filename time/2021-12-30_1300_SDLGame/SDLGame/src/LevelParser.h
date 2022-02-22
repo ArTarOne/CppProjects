@@ -4,11 +4,16 @@
 #include "Level.h"
 
 /**
- * \brief A parser for .tmx files and creating levels from them.
+ * \brief read map.tmx. Return Level*
  */
 class LevelParser
 {
 public:
+    /**
+     * \brief read map.tmx. Return Level*
+     * \param levelFile [in] map.tmx file name
+     * \return Return Level*
+     */
     Level* parseLevel(const char* levelFile);
 
 private:

@@ -42,6 +42,15 @@ std::vector<GameObject*>* ObjectLayer::getGameObjects()
     return &m_gameObjects;
 }
 
+ObjectLayer::~ObjectLayer()
+{
+    for(auto& gameObject : m_gameObjects)
+    {
+        gameObject->clean();
+    }
+    m_gameObjects.clear();
+}
+
 void ObjectLayer::update()
 {
     for(auto& gameObject : m_gameObjects)

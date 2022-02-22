@@ -2,7 +2,7 @@
 
 #include "GameObjectFactory.h"
 
-GameObjectFactory* GameObjectFactory::s_pInstance = nullptr;
+GameObjectFactory* GameObjectFactory::s_pTheGameObjectFactory = nullptr;
 
 GameObjectFactory::GameObjectFactory() = default;
 
@@ -10,12 +10,12 @@ GameObjectFactory::~GameObjectFactory() = default;
 
 GameObjectFactory* GameObjectFactory::Instance()
 {
-    if(s_pInstance == nullptr)
+    if(s_pTheGameObjectFactory == nullptr)
     {
-        s_pInstance = new GameObjectFactory();
-        return s_pInstance;
+        s_pTheGameObjectFactory = new GameObjectFactory();
+        return s_pTheGameObjectFactory;
     }
-    return s_pInstance;
+    return s_pTheGameObjectFactory;
 }
 
 bool GameObjectFactory::registerType(std::string typeID, BaseCreator* pCreator)

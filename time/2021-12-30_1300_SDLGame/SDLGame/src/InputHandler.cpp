@@ -5,11 +5,11 @@
 
 InputHandler* InputHandler::Instance()
 {
-    if(s_pInstance == nullptr)
+    if(s_pTheInputHandlerInstance == nullptr)
     {
-        s_pInstance = new InputHandler();
+        s_pTheInputHandlerInstance = new InputHandler();
     }
-    return s_pInstance;
+    return s_pTheInputHandlerInstance;
 }
 
 void InputHandler::update()
@@ -327,4 +327,4 @@ void InputHandler::onJoystickButtonUp(SDL_Event& event)
     m_buttonStates[whichOne][event.jbutton.button] = false;
 }
 
-InputHandler* InputHandler::s_pInstance = nullptr;
+InputHandler* InputHandler::s_pTheInputHandlerInstance = nullptr;

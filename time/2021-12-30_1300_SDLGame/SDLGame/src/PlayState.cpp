@@ -17,7 +17,7 @@ PlayState::PlayState()
 
 void PlayState::update()
 {
-    pLevel->update();
+    m_pLevel->update();
 
     if(TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_ESCAPE))
     {
@@ -27,25 +27,20 @@ void PlayState::update()
 
 void PlayState::render()
 {
-    pLevel->render();
+    m_pLevel->render();
 }
 
 bool PlayState::onEnter()
 {
     std::cout << "entering PlayState\n";
     LevelParser levelParser;
-    pLevel = levelParser.parseLevel(utils::deepSearch("map1.tmx").c_str());
+    m_pLevel = levelParser.parseLevel(utils::deepSearch("map.tmx").c_str());
     return true;
 }
 
-bool PlayState::onExit()
+bool PlayState::onExit() // TODO never called. Error prone
 {
-    // TODO delegate to Level* pLevel
-    //for(auto& gameObject : m_gameObjects)
-    //{
-    //    gameObject->clean();
-    //}
-    //m_gameObjects.clear();
+    delete m_pLevel;
 
     for(auto& textureID : m_textureIDList)
     {

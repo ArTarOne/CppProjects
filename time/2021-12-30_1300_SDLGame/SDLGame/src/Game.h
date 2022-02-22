@@ -27,7 +27,7 @@ private:
     ~Game();
 
 private:
-    static Game*      s_pInstance;
+    static Game*      m_pTheGameInstance;
     SDL_Window*       m_pWindow   = nullptr;
     SDL_Renderer*     m_pRenderer = nullptr;
     bool              m_bRunning  = false;

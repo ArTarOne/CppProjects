@@ -34,7 +34,7 @@ void PauseState::render()
 bool PauseState::onEnter()
 {
     StateParser stateParser;
-    stateParser.parseState("menu_states.xml", s_pauseID, &m_gameObjects, &m_textureIDList);
+    stateParser.parseState("states.xml", s_pauseID, &m_gameObjects, &m_textureIDList);
 
     m_callbacks.push_back(nullptr);
     m_callbacks.push_back(s_pauseToMain);

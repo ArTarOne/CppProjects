@@ -68,11 +68,6 @@ void TextureManager::drawFrame(const std::string& id, int x, int y, int width, i
     SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, nullptr, flip);
 }
 
-void TextureManager::clearFromTextureMap(std::string id)
-{
-    m_textureMap.erase(id);
-}
-
 void TextureManager::drawTile(std::string id, int margin, int spacing, int x, int y, int width,
                               int height, int currentRow, int currentFrame, SDL_Renderer* pRenderer)
 {
@@ -85,6 +80,11 @@ void TextureManager::drawTile(std::string id, int margin, int spacing, int x, in
     destRect.x = x;
     destRect.y = y;
     SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, nullptr, SDL_FLIP_NONE);
+}
+
+void TextureManager::clearFromTextureMap(std::string id)
+{
+    m_textureMap.erase(id);
 }
 
 TextureManager::TextureManager() = default;

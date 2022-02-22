@@ -4,6 +4,11 @@
 
 void GameStateMachine::pushState(GameState* pState)
 {
+    if(!m_gameStates.empty() && m_gameStates.back()->getStateID() == pState->getStateID())
+    {
+        return;
+    }
+
     m_gameStates.push_back(pState);
     m_gameStates.back()->onEnter();
 }

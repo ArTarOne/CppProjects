@@ -16,12 +16,11 @@ bool StateParser::parseState(const char*               stateFile, const std::str
     {
         std::cerr << "Error loading xml file " << stateFile << ". Error: " << xmlDoc.ErrorID() <<
             "\n";
+        _ASSERT(false);
         return false;
     }
 
-    std::cout << "xml: start parsing state " << stateID << " in file " << stateFile << "\n";
-
-    // xml elements
+    // found states.xml:<STATES><state-id-name>
     tinyxml2::XMLElement* pRoot      = xmlDoc.RootElement();
     tinyxml2::XMLElement* pStateRoot = nullptr;
     for(tinyxml2::XMLElement* e = pRoot->FirstChildElement(); e != nullptr; e = e->
@@ -32,10 +31,10 @@ bool StateParser::parseState(const char*               stateFile, const std::str
             pStateRoot = e;
         }
     }
-
     if(!pStateRoot)
     {
         std::cerr << "xml: state " << stateID << " not found\n";
+        _ASSERT(false);
         return false;
     }
 
@@ -49,15 +48,13 @@ bool StateParser::parseState(const char*               stateFile, const std::str
             pTextureRoot = e;
         }
     }
-
     if(!pTextureRoot)
     {
         std::cerr << "xml: element TEXTURES not found\n";
+        _ASSERT(false);
         return false;
     }
-
     parseTextures(pTextureRoot, pTextureIDs);
-    std::cout << "xml: found " << pTextureIDs->size() << " textures\n";
 
     // objects
     tinyxml2::XMLElement* pObjectRoot = nullptr;
@@ -69,19 +66,22 @@ bool StateParser::parseState(const char*               stateFile, const std::str
             pObjectRoot = e;
         }
     }
-
     if(!pObjectRoot)
     {
         std::cerr << "xml: element OBJECTS not found\n";
+        _ASSERT(false);
         return false;
     }
-
     parseObjects(pObjectRoot, pObjects);
-    std::cout << "xml: found " << pObjects->size() << " objects\n";
 
     return true;
 }
 
+/**
+ * \brief load states from states.xml to container
+ * \param pStateRoot [in] states.xml:<STATES><state-name><OBJECTS>
+ * \param pObjects [out] add objects to this container
+ */
 void StateParser::parseObjects(tinyxml2::XMLElement* pStateRoot, std::vector<GameObject*>* pObjects)
 {
     for(tinyxml2::XMLElement* e = pStateRoot->FirstChildElement(); e != nullptr; e = e->
@@ -108,6 +108,11 @@ void StateParser::parseObjects(tinyxml2::XMLElement* pStateRoot, std::vector<Gam
     }
 }
 
+/**
+ * \brief load textures from states.xml to TheTextureManager
+ * \param pStateRoot [in] states.xml:<STATES><state-name><TEXTURES>
+ * \param pTextureIDs [out] add ID's to this container
+ */
 void StateParser::parseTextures(tinyxml2::XMLElement*     pStateRoot,
                                 std::vector<std::string>* pTextureIDs)
 {

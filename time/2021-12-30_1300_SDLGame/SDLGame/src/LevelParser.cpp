@@ -13,11 +13,6 @@
 #include "Utils.h"
 #include "LoaderParams.h"
 
-/**
- * \brief read level from xml file
- * \param levelFile [in] map.tmx file name
- * \return [out new] pointer to the new class Level
- */
 Level* LevelParser::parseLevel(const char* levelFile)
 {
     tinyxml2::XMLDocument levelDocument;

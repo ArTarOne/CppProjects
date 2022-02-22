@@ -15,12 +15,12 @@ Game::~Game() = default;
 
 Game* Game::Instance()
 {
-    if(s_pInstance == nullptr)
+    if(m_pTheGameInstance == nullptr)
     {
-        s_pInstance = new Game();
-        return s_pInstance;
+        m_pTheGameInstance = new Game();
+        return m_pTheGameInstance;
     }
-    return s_pInstance;
+    return m_pTheGameInstance;
 }
 
 bool Game::init(const char* title, const int xpos, const int ypos, const int width, int height,
@@ -38,6 +38,7 @@ bool Game::init(const char* title, const int xpos, const int ypos, const int wid
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
         std::cerr << "SDL init fail\n";
+        _ASSERT(false);
         return false;
     }
 
@@ -47,6 +48,7 @@ bool Game::init(const char* title, const int xpos, const int ypos, const int wid
     if(m_pWindow == nullptr)
     {
         std::cerr << "window init fail\n";
+        _ASSERT(false);
         return false;
     }
 
@@ -54,6 +56,7 @@ bool Game::init(const char* title, const int xpos, const int ypos, const int wid
     if(m_pRenderer == nullptr)
     {
         std::cerr << "renderer init fail\n";
+        _ASSERT(false);
         return false;
     }
 
@@ -68,7 +71,6 @@ bool Game::init(const char* title, const int xpos, const int ypos, const int wid
     m_pGameStateMachine = new GameStateMachine();
     m_pGameStateMachine->changeState(new MainMenuState());
 
-    std::cout << "init success\n";
     m_bRunning = true;
     return true;
 }
@@ -141,4 +143,4 @@ int Game::getGameHeight() const
     return m_gameHeight;
 }
 
-Game* Game::s_pInstance = nullptr;
+Game* Game::m_pTheGameInstance = nullptr;

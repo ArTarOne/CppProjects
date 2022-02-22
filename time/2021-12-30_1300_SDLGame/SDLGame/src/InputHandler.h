@@ -52,7 +52,7 @@ private:
     void onJoystickButtonUp(SDL_Event& event);
 
 private:
-    static InputHandler*       s_pInstance;
+    static InputHandler*       s_pTheInputHandlerInstance;
     std::vector<SDL_Joystick*> m_joysticks;
 
     bool m_bJoysticksInitialized;

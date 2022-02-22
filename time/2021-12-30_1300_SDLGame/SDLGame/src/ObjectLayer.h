@@ -12,6 +12,9 @@ public:
 
     std::vector<GameObject*>* getGameObjects();
 
+protected:
+    ~ObjectLayer() override;
+
 private:
     std::vector<GameObject*> m_gameObjects;
 };

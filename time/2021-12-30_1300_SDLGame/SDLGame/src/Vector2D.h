@@ -12,7 +12,7 @@ public:
     float length();
 
     /*
-     * friend functions allow as to write:
+     * friend functions allow write:
      *   Vector2D v1(10, 11);
      *   Vector2D v2(35,25);
      *   v1 += v2;

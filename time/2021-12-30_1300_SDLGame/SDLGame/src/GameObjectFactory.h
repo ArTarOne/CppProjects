@@ -23,7 +23,7 @@ private:
     ~GameObjectFactory();
 
 private:
-    static GameObjectFactory*           s_pInstance;
+    static GameObjectFactory*           s_pTheGameObjectFactory;
     std::map<std::string, BaseCreator*> m_creators;
 };
 

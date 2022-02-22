@@ -7,6 +7,10 @@ Level::Level()
 
 Level::~Level()
 {
+    for(Layer* layer : m_layers)
+    {
+        delete layer;
+    }
 }
 
 void Level::update()
