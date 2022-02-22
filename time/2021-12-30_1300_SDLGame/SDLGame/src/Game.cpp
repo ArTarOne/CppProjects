@@ -8,6 +8,7 @@
 #include "MenuButton.h"
 #include "Player.h"
 #include "PlayState.h"
+#include "SoundManager.h"
 #include "TextureManager.h"
 
 Game::Game()  = default;
@@ -67,6 +68,8 @@ bool Game::init(const char* title, const int xpos, const int ypos, const int wid
     TheGameObjectFactory::Instance()->registerType("Player", new PlayerCreator());
     TheGameObjectFactory::Instance()->registerType("Enemy", new EnemyCreator());
     TheGameObjectFactory::Instance()->registerType("AnimatedGraphic", new AnimatedGraphicCreator());
+
+    TheSoundManager::Instance()->load("boom.wav", "boom", sound_type::SOUND_SFX);
 
     m_pGameStateMachine = new GameStateMachine();
     m_pGameStateMachine->changeState(new MainMenuState());

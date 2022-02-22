@@ -170,6 +170,7 @@
     <ClCompile Include="src\PlayState.cpp" />
     <ClCompile Include="src\SDLGame.cpp" />
     <ClCompile Include="src\SDLGameObject.cpp" />
+    <ClCompile Include="src\SoundManager.cpp" />
     <ClCompile Include="src\StateParser.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\TileLayer.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\PlayState.h" />
     <ClInclude Include="src\SDLGameObject.h" />
+    <ClInclude Include="src\SoundManager.h" />
     <ClInclude Include="src\StateParser.h" />
     <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\TileLayer.h" />

@@ -1,5 +1,6 @@
 ﻿#include "Player.h"
 #include "InputHandler.h"
+#include "SoundManager.h"
 
 Player::Player()
     : SDLGameObject()
@@ -86,6 +87,10 @@ void Player::handleInput()
     if(TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN))
     {
         m_velocity.setY(2);
+    }
+    if(TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE))
+    {
+        TheSoundManager::Instance()->playSound("boom", 0);
     }
 }
 
