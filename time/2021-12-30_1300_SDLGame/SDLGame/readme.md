@@ -7,9 +7,7 @@
 ## TODO
 
 ```
-Bug: 
-	start.pause.main_menu.start lead to m_gameStates.size()=2
-	expexted m_gameStates.size()=1
+No bugs, no features
 ```
 
 

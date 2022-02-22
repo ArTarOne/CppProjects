@@ -66,7 +66,7 @@ void ObjectLayer::update()
     if(checkCollision(dynamic_cast<SDLGameObject*>(m_gameObjects[0]),
                       dynamic_cast<SDLGameObject*>(m_gameObjects[1])))
     {
-        TheGame::Instance()->getStateMachine()->pushState(new GameOverState());
+        TheGame::Instance()->getStateMachine()->changeState(new GameOverState());
     }
 }
 

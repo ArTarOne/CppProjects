@@ -20,7 +20,7 @@ public:
      * \param type [in] determine which one function should use to load sound: Mix_LoadMUS or Mix_LoadWAV
      * \return false in case of error
      */
-    bool load(std::string fileName, std::string id, sound_type type);
+    bool load(const std::string& fileName, const std::string& id, sound_type type);
     /**
      * \brief Play an audio chunk on a specific channel.
      * \param id [in] If the specified channel is -1, play on the first free channel

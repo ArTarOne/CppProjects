@@ -6,7 +6,7 @@ constexpr int DELAY_TIME = 1000.0f / FPS;
 
 int main(int /*argc*/, char* /*args*/[])
 {
-    if(false == TheGame::Instance()->init("Chapter 1", 100, 100, 640, 480, false))
+    if(false == TheGame::Instance()->init("SDL GAME", 100, 100, 640, 480, false))
     {
         std::cout << "game init failure - " << SDL_GetError() << "\n";
         return -1;

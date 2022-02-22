@@ -12,11 +12,6 @@ const std::string PauseState::s_pauseID = "PAUSE";
 
 void PauseState::update()
 {
-    if(TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_ESCAPE))
-    {
-        TheGame::Instance()->getStateMachine()->pushState(new PauseState());
-    }
-
     for(auto& gameObject : m_gameObjects)
     {
         gameObject->update();
@@ -85,6 +80,9 @@ void PauseState::setCallbacks(const std::vector<Callback>& callbacks)
 
 void PauseState::s_pauseToMain()
 {
+    // remove PlayState
+    TheGame::Instance()->getStateMachine()->popState();
+    // then change to MainMenuState
     TheGame::Instance()->getStateMachine()->changeState(new MainMenuState());
 }
 
