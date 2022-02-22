@@ -32,7 +32,6 @@ void PlayState::render()
 
 bool PlayState::onEnter()
 {
-    std::cout << "entering PlayState\n";
     LevelParser levelParser;
     m_pLevel = levelParser.parseLevel(utils::deepSearch("map.tmx").c_str());
     return true;
@@ -48,7 +47,6 @@ bool PlayState::onExit() // TODO never called. Error prone
     }
     m_textureIDList.clear();
 
-    std::cout << "exiting PlayState\n";
     return true;
 }
 

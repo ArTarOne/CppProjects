@@ -37,7 +37,6 @@ bool PauseState::onEnter()
 
     setCallbacks(m_callbacks);
 
-    std::cout << "entering PauseState\n";
     return true;
 }
 
@@ -57,7 +56,6 @@ bool PauseState::onExit()
 
     TheInputHandler::Instance()->reset(); // reset the mouse button states to false
 
-    std::cout << "exiting PauseState\n";
     return true;
 }
 

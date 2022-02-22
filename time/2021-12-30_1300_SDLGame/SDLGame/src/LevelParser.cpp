@@ -227,7 +227,7 @@ void LevelParser::parseObjectLayer(tinyxml2::XMLElement* pObjectElement,
     {
         if(e->Value() == std::string("object"))
         {
-            auto type = e->Attribute("type");
+            auto        type = e->Attribute("type");
             GameObject* pGameObject;
 
             if(type)
@@ -237,6 +237,12 @@ void LevelParser::parseObjectLayer(tinyxml2::XMLElement* pObjectElement,
             else
             {
                 // TODO parse poligon (not-typed object)
+                continue;
+            }
+
+            if(!pGameObject)
+            {
+                std::cerr << "WARNING: pGameObject is nullptr. " << __func__ << "\n";
                 continue;
             }
 
@@ -254,7 +260,14 @@ void LevelParser::parseObjectLayer(tinyxml2::XMLElement* pObjectElement,
  */
 GameObject* LevelParser::parseTypedGameObject(tinyxml2::XMLElement* pTypedObject)
 {
-    GameObject* pGameObject = TheGameObjectFactory::Instance()->create(pTypedObject->Attribute("type"));
+    GameObject* pGameObject = TheGameObjectFactory::Instance()->create(
+        pTypedObject->Attribute("type"));
+
+    if(!pGameObject)
+    {
+        std::cerr << "WARNING: pGameObject is nullptr. " << __func__ << "\n";
+        return nullptr;
+    }
 
     int         x = pTypedObject->IntAttribute("x");
     int         y = pTypedObject->IntAttribute("y");
@@ -270,8 +283,8 @@ GameObject* LevelParser::parseTypedGameObject(tinyxml2::XMLElement* pTypedObject
     {
         if(properties->Value() == std::string("properties"))
         {
-            for(auto* property = properties->FirstChildElement(); property != nullptr;
-                property       = property->NextSiblingElement())
+            for(auto* property = properties->FirstChildElement(); property != nullptr; property =
+                property->NextSiblingElement())
             {
                 if(property->Value() == std::string("property"))
                 {

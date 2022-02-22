@@ -36,7 +36,7 @@ GameObject* GameObjectFactory::create(const std::string& typeID)
     const auto& it = m_creators.find(typeID);
     if(it == m_creators.end())
     {
-        std::cout << "could not find type: " << typeID << "\n";
+        std::cerr << "could not find type: " << typeID << "\n";
         return nullptr;
     }
     BaseCreator* pCreator = (*it).second;

@@ -35,8 +35,6 @@ void MainMenuState::render()
 
 bool MainMenuState::onEnter()
 {
-    std::cout << "entering MainMenuState\n";
-
     StateParser stateParser;
     stateParser.parseState("states.xml", s_menuID, &m_gameObjects, &m_textureIDList);
 
@@ -63,7 +61,6 @@ bool MainMenuState::onExit()
     }
     m_textureIDList.clear();
 
-    std::cout << "exiting MainMenuState\n";
     return true;
 }
 

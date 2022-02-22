@@ -69,7 +69,6 @@ void GameStateMachine::destroyRemoveCandidates()
 {
     for(auto& stateToDelete : m_removeCandidates)
     {
-        std::cout << "deleting: " << stateToDelete->getStateID() << "\n";
         delete stateToDelete;
     }
     m_removeCandidates.clear();

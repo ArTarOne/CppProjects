@@ -28,8 +28,6 @@ void GameOverState::render()
 
 bool GameOverState::onEnter()
 {
-    std::cout << "entering PauseState\n";
-
     StateParser stateParser;
     stateParser.parseState("states.xml", s_gameOverID, &m_gameObjects, &m_textureIDList);
 
@@ -56,7 +54,6 @@ bool GameOverState::onExit()
     }
     m_textureIDList.clear();
 
-    std::cout << "exiting GameOverState\n";
     return true;
 }
 
