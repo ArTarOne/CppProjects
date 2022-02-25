@@ -10,8 +10,8 @@ public:
     void changeState(GameState* pState);
     void popState();
 
-    void update();
-    void render();
+    void update() const;
+    void render() const;
     void destroyRemoveCandidates();
 
 private:

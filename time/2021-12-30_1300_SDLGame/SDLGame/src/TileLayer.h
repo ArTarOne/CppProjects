@@ -13,7 +13,7 @@ public:
     void    render() override;
     void    setTileIDs(const std::vector<std::vector<int>>& data);
     void    setTileSize(int tileSize);
-    Tileset getTilesetByID(int tileID);
+    Tileset getTilesetByID(int tileID) const;
 
 private:
     int                           m_numColumns;

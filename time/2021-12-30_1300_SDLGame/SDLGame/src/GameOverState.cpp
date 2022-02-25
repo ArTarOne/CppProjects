@@ -12,7 +12,7 @@ const std::string GameOverState::s_gameOverID = "GAMEOVER";
 
 void GameOverState::update()
 {
-    for(auto& gameObject : m_gameObjects)
+    for(const auto& gameObject : m_gameObjects)
     {
         gameObject->update();
     }
@@ -20,7 +20,7 @@ void GameOverState::update()
 
 void GameOverState::render()
 {
-    for(auto& gameObject : m_gameObjects)
+    for(const auto& gameObject : m_gameObjects)
     {
         gameObject->draw();
     }
@@ -42,15 +42,15 @@ bool GameOverState::onEnter()
 
 bool GameOverState::onExit()
 {
-    for(auto& gameObject : m_gameObjects)
+    for(const auto& gameObject : m_gameObjects)
     {
         gameObject->clean();
     }
     m_gameObjects.clear();
 
-    for(auto& textureID : m_textureIDList)
+    for(const auto& textureID : m_textureIDList)
     {
-        TheTextureManager::Instance()->clearFromTextureMap(textureID);
+        TheTextureManager::instance()->clearFromTextureMap(textureID);
     }
     m_textureIDList.clear();
 
@@ -64,7 +64,7 @@ std::string GameOverState::getStateID() const
 
 void GameOverState::setCallbacks(const std::vector<Callback>& callbacks)
 {
-    for(auto& gameObject : m_gameObjects)
+    for(const auto& gameObject : m_gameObjects)
     {
         if(dynamic_cast<MenuButton*>(gameObject))
         {
@@ -76,10 +76,10 @@ void GameOverState::setCallbacks(const std::vector<Callback>& callbacks)
 
 void GameOverState::s_gameOverToMain()
 {
-    TheGame::Instance()->getStateMachine()->changeState(new MainMenuState());
+    TheGame::instance()->getStateMachine()->changeState(new MainMenuState());
 }
 
 void GameOverState::s_restartPlay()
 {
-    TheGame::Instance()->getStateMachine()->changeState(new PlayState());
+    TheGame::instance()->getStateMachine()->changeState(new PlayState());
 }

@@ -21,5 +21,5 @@ public:
 
 private:
     static const std::string s_playID;
-    Level*                   m_pLevel;
+    Level*                   m_pLevel{};
 };

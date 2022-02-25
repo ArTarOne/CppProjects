@@ -5,16 +5,16 @@
 
 bool checkCollision(SDLGameObject* p1, SDLGameObject* p2)
 {
-    int leftA   = p1->getPosition().getX();
-    int rightA  = p1->getPosition().getX() + p1->getWidth();
-    int topA    = p1->getPosition().getY();
-    int bottomA = p1->getPosition().getY() + p1->getHeight();
+    const int leftA   = p1->getPosition().getX();
+    const int rightA  = p1->getPosition().getX() + p1->getWidth();
+    const int topA    = p1->getPosition().getY();
+    const int bottomA = p1->getPosition().getY() + p1->getHeight();
 
     //Calculate the sides of rect B
-    int leftB   = p2->getPosition().getX();
-    int rightB  = p2->getPosition().getX() + p2->getWidth();
-    int topB    = p2->getPosition().getY();
-    int bottomB = p2->getPosition().getY() + p2->getHeight();
+    const int leftB   = p2->getPosition().getX();
+    const int rightB  = p2->getPosition().getX() + p2->getWidth();
+    const int topB    = p2->getPosition().getY();
+    const int bottomB = p2->getPosition().getY() + p2->getHeight();
 
     //If any of the sides from A are outside of B
     if(bottomA <= topB)
@@ -44,7 +44,7 @@ std::vector<GameObject*>* ObjectLayer::getGameObjects()
 
 ObjectLayer::~ObjectLayer()
 {
-    for(auto& gameObject : m_gameObjects)
+    for(const auto& gameObject : m_gameObjects)
     {
         gameObject->clean();
     }
@@ -53,7 +53,7 @@ ObjectLayer::~ObjectLayer()
 
 void ObjectLayer::update()
 {
-    for(auto& gameObject : m_gameObjects)
+    for(const auto& gameObject : m_gameObjects)
     {
         gameObject->update();
     }
@@ -63,16 +63,15 @@ void ObjectLayer::update()
         return;
     }
 
-    if(checkCollision(dynamic_cast<SDLGameObject*>(m_gameObjects[0]),
-                      dynamic_cast<SDLGameObject*>(m_gameObjects[1])))
+    if(checkCollision(dynamic_cast<SDLGameObject*>(m_gameObjects[0]), dynamic_cast<SDLGameObject*>(m_gameObjects[1])))
     {
-        TheGame::Instance()->getStateMachine()->changeState(new GameOverState());
+        TheGame::instance()->getStateMachine()->changeState(new GameOverState());
     }
 }
 
 void ObjectLayer::render()
 {
-    for(auto& gameObject : m_gameObjects)
+    for(const auto& gameObject : m_gameObjects)
     {
         gameObject->draw();
     }

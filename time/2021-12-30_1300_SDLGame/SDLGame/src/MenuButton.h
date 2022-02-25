@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "GameObjectFactory.h"
-#include "LoaderParams.h"
 #include "SDLGameObject.h"
 
 class MenuButton : public SDLGameObject
@@ -12,10 +11,10 @@ public:
     void clean() override;
     void load(const LoaderParams* pParams) override;
     void setCallback(void (*callback)());
-    int  getCallbackID();
+    int  getCallbackID() const;
 
 private:
-    enum button_state
+    enum ButtonStateEnum
     {
         MOUSE_OUT = 0,
         MOUSE_OVER = 1,

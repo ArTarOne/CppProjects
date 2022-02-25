@@ -19,9 +19,11 @@ public:
      * \param pTextureIDs [out] push back new TextureIDs
      * \return false in case of error (ASSERTION in Debug)
      */
-    bool parseState(const char*               stateFile, const std::string&       stateID,
-                    std::vector<GameObject*>* pObjects, std::vector<std::string>* pTextureIDs);
+    static bool parseState(const char*               stateFile,
+                           const std::string&        stateID,
+                           std::vector<GameObject*>* pObjects,
+                           std::vector<std::string>* pTextureIDs);
 private:
-    void parseObjects(tinyxml2::XMLElement* pStateRoot, std::vector<GameObject*>* pObjects);
-    void parseTextures(tinyxml2::XMLElement* pStateRoot, std::vector<std::string>* pTextureIDs);
+    static void parseObjects(tinyxml2::XMLElement* pStateRoot, std::vector<GameObject*>* pObjects);
+    static void parseTextures(tinyxml2::XMLElement* pStateRoot, std::vector<std::string>* pTextureIDs);
 };

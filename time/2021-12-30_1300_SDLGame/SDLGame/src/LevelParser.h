@@ -18,15 +18,16 @@ public:
     Level* parseLevel(const char* levelFile);
 
 private:
-    void parseTilesets(tinyxml2::XMLElement* pTilesetRoot, std::vector<Tileset>* pTilesets);
-    void parseTileLayer(tinyxml2::XMLElement*       pTileElement, std::vector<Layer*>* pLayers,
-                        const std::vector<Tileset>* pTilesets);
-    void parseTextures(tinyxml2::XMLElement* pMapProperties);
-    void parseObjectLayer(tinyxml2::XMLElement* pObjectElement, std::vector<Layer*>* pLayers);
-    GameObject* parseTypedGameObject(tinyxml2::XMLElement* pTypedObject);
+    static void parseTilesets(tinyxml2::XMLElement* pTilesetRoot, std::vector<Tileset>* pTilesets);
+    void        parseTileLayer(tinyxml2::XMLElement*       pTileElement,
+                               std::vector<Layer*>*        pLayers,
+                               const std::vector<Tileset>* pTilesets) const;
+    static void        parseTextures(tinyxml2::XMLElement* pMapProperties);
+    static void        parseObjectLayer(tinyxml2::XMLElement* pObjectElement, std::vector<Layer*>* pLayers);
+    static GameObject* parseTypedGameObject(tinyxml2::XMLElement* pTypedObject);
 
 private:
-    int m_tileSize;
-    int m_width;
-    int m_height;
+    int m_tileSize = 0;
+    int m_width    = 0;
+    int m_height   = 0;
 };

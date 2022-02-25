@@ -3,7 +3,7 @@
 #include <map>
 #include <string>
 
-enum class sound_type
+enum class SoundTypeEnum
 {
     SOUND_MUSIC = 0,
     SOUND_SFX = 1
@@ -12,7 +12,7 @@ enum class sound_type
 class SoundManager
 {
 public:
-    static SoundManager* Instance();
+    static SoundManager* instance();
     /**
      * \brief Load a wave file or a music (.mod .s3m .it .xm) file
      * \param fileName [in] path to *.wav file
@@ -20,7 +20,7 @@ public:
      * \param type [in] determine which one function should use to load sound: Mix_LoadMUS or Mix_LoadWAV
      * \return false in case of error
      */
-    bool load(const std::string& fileName, const std::string& id, sound_type type);
+    bool load(const std::string& fileName, const std::string& id, SoundTypeEnum type);
     /**
      * \brief Play an audio chunk on a specific channel.
      * \param id [in] If the specified channel is -1, play on the first free channel
@@ -40,6 +40,8 @@ private:
     std::map<std::string, Mix_Music*> m_music;
     SoundManager();
     ~SoundManager();
+
+public:
     SoundManager(const SoundManager&)            = delete;
     SoundManager& operator=(const SoundManager&) = delete;
 };

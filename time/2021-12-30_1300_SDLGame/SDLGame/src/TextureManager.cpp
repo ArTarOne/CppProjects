@@ -5,7 +5,7 @@
 #include "TextureManager.h"
 #include "Utils.h"
 
-TextureManager* TextureManager::Instance()
+TextureManager* TextureManager::instance()
 {
     if(s_pInstance == nullptr)
     {
@@ -15,8 +15,7 @@ TextureManager* TextureManager::Instance()
     return s_pInstance;
 }
 
-bool TextureManager::load(const std::string& fileName, const std::string& id,
-                          SDL_Renderer*      pRenderer)
+bool TextureManager::load(const std::string& fileName, const std::string& id, SDL_Renderer* pRenderer)
 {
     SDL_Surface* pTempSurface = IMG_Load(utils::deepSearch(fileName).c_str());
     if(pTempSurface == nullptr)
@@ -38,8 +37,14 @@ bool TextureManager::load(const std::string& fileName, const std::string& id,
     return true;
 }
 
-void TextureManager::draw(const std::string& id, int x, int y, int width, int height,
-                          SDL_Renderer*      pRenderer, SDL_RendererFlip flip)
+// ReSharper disable once CppMemberFunctionMayBeConst
+void TextureManager::draw(const std::string& id,
+                          int                x,
+                          int                y,
+                          int                width,
+                          int                height,
+                          SDL_Renderer*      pRenderer,
+                          SDL_RendererFlip   flip)
 {
     SDL_Rect srcRect;
     SDL_Rect destRect;
@@ -52,13 +57,20 @@ void TextureManager::draw(const std::string& id, int x, int y, int width, int he
     SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, nullptr, flip);
 }
 
-void TextureManager::drawFrame(const std::string& id, int x, int y, int width, int height,
-                               int currentRow, int currentFrame, SDL_Renderer* pRenderer,
-                               SDL_RendererFlip flip)
+// ReSharper disable once CppMemberFunctionMayBeConst
+void TextureManager::drawFrame(const std::string& id,
+                               int                x,
+                               int                y,
+                               int                width,
+                               int                height,
+                               int                currentRow,
+                               int                currentFrame,
+                               SDL_Renderer*      pRenderer,
+                               SDL_RendererFlip   flip)
 {
     SDL_Rect srcRect;
     SDL_Rect destRect;
-    srcRect.x  = width * currentFrame;      // One sounds more natural to use the first row,
+    srcRect.x  = width * currentFrame; // One sounds more natural to use the first row,
     srcRect.y  = height * (currentRow - 1); // rather than the zeroth row).
     srcRect.w  = destRect.w = width;
     srcRect.h  = destRect.h = height;
@@ -68,8 +80,17 @@ void TextureManager::drawFrame(const std::string& id, int x, int y, int width, i
     SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, nullptr, flip);
 }
 
-void TextureManager::drawTile(std::string id, int margin, int spacing, int x, int y, int width,
-                              int height, int currentRow, int currentFrame, SDL_Renderer* pRenderer)
+// ReSharper disable once CppMemberFunctionMayBeConst
+void TextureManager::drawTile(const std::string& id,
+                              const int          margin,
+                              const int          spacing,
+                              const int          x,
+                              const int          y,
+                              const int          width,
+                              const int          height,
+                              const int          currentRow,
+                              const int          currentFrame,
+                              SDL_Renderer*      pRenderer)
 {
     SDL_Rect srcRect;
     SDL_Rect destRect;
@@ -82,7 +103,7 @@ void TextureManager::drawTile(std::string id, int margin, int spacing, int x, in
     SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, nullptr, SDL_FLIP_NONE);
 }
 
-void TextureManager::clearFromTextureMap(std::string id)
+void TextureManager::clearFromTextureMap(const std::string& id)
 {
     m_textureMap.erase(id);
 }

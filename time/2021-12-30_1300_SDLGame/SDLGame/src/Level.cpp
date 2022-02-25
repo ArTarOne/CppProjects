@@ -1,29 +1,27 @@
 ﻿#include "Level.h"
 #include "Layer.h"
 
-Level::Level()
-{
-}
+Level::Level() = default;
 
 Level::~Level()
 {
-    for(Layer* layer : m_layers)
+    for(const Layer* layer : m_layers)
     {
         delete layer;
     }
 }
 
-void Level::update()
+void Level::update() const
 {
-    for(auto& layer : m_layers)
+    for(const auto& layer : m_layers)
     {
         layer->update();
     }
 }
 
-void Level::render()
+void Level::render() const
 {
-    for(auto& layer : m_layers)
+    for(const auto& layer : m_layers)
     {
         layer->render();
     }

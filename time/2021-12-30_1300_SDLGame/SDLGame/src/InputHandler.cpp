@@ -3,7 +3,7 @@
 #include "InputHandler.h"
 #include "Game.h"
 
-InputHandler* InputHandler::Instance()
+InputHandler* InputHandler::instance()
 {
     if(s_pTheInputHandlerInstance == nullptr)
     {
@@ -21,40 +21,30 @@ void InputHandler::update()
 
         switch(event.type)
         {
-        case SDL_QUIT:
-            TheGame::Instance()->quit();
+        case SDL_QUIT: TheGame::instance()->quit();
             break;
-        case SDL_JOYAXISMOTION:
-            onJoystickAxisMove(event);
+        case SDL_JOYAXISMOTION: onJoystickAxisMove(event);
             break;
-        case SDL_JOYBUTTONDOWN:
-            onJoystickButtonDown(event);
+        case SDL_JOYBUTTONDOWN: onJoystickButtonDown(event);
             break;
-        case SDL_JOYBUTTONUP:
-            onJoystickButtonUp(event);
+        case SDL_JOYBUTTONUP: onJoystickButtonUp(event);
             break;
-        case SDL_MOUSEMOTION:
-            onMouseMove(event);
+        case SDL_MOUSEMOTION: onMouseMove(event);
             break;
-        case SDL_MOUSEBUTTONDOWN:
-            onMouseButtonDown(event);
+        case SDL_MOUSEBUTTONDOWN: onMouseButtonDown(event);
             break;
-        case SDL_MOUSEBUTTONUP:
-            onMouseButtonUp(event);
+        case SDL_MOUSEBUTTONUP: onMouseButtonUp(event);
             break;
-        case SDL_KEYDOWN:
-            onKeyDown();
+        case SDL_KEYDOWN: onKeyDown();
             break;
-        case SDL_KEYUP:
-            onKeyUp();
+        case SDL_KEYUP: onKeyUp();
             break;
-        default:
-            break;
+        default: break;
         }
     }
 }
 
-void InputHandler::clean()
+void InputHandler::clean() const
 {
     if(m_bJoysticksInitialized)
     {
@@ -89,8 +79,7 @@ void InputHandler::initialiseJoysticks()
             }
             else
             {
-                std::cout << "SDL_JoystickOpen" << "(" << i << ")" << " returns error: " <<
-                    SDL_GetError();
+                std::cout << "SDL_JoystickOpen" << "(" << i << ")" << " returns error: " << SDL_GetError();
             }
         }
         SDL_JoystickEventState(SDL_ENABLE);
@@ -104,12 +93,12 @@ void InputHandler::initialiseJoysticks()
     }
 }
 
-bool InputHandler::joysticksInitialized()
+bool InputHandler::joysticksInitialized() const
 {
     return m_bJoysticksInitialized;
 }
 
-int InputHandler::xvalue(int joy, int stick)
+float InputHandler::xValue(int joy, int stick) const
 {
     if(!m_joystickValues.empty())
     {
@@ -125,7 +114,7 @@ int InputHandler::xvalue(int joy, int stick)
     return 0;
 }
 
-int InputHandler::yvalue(int joy, int stick)
+float InputHandler::yValue(int joy, int stick) const
 {
     if(!m_joystickValues.empty())
     {
@@ -146,17 +135,17 @@ bool InputHandler::getButtonState(int joy, int buttonNumber)
     return m_buttonStates[joy][buttonNumber];
 }
 
-bool InputHandler::getMouseButtonState(int buttonNumber)
+bool InputHandler::getMouseButtonState(int buttonNumber) const
 {
     return m_mouseButtonStates[buttonNumber];
 }
 
-const Vector2D& InputHandler::getMousePosition()
+const Vector2D& InputHandler::getMousePosition() const
 {
     return m_mousePosition;
 }
 
-bool InputHandler::isKeyDown(SDL_Scancode key)
+bool InputHandler::isKeyDown(const SDL_Scancode key) const
 {
     if(m_pKeystates == nullptr)
     {
@@ -171,8 +160,7 @@ bool InputHandler::isKeyDown(SDL_Scancode key)
     return false;
 }
 
-InputHandler::InputHandler()
-    : m_bJoysticksInitialized(false), m_mousePosition(0, 0)
+InputHandler::InputHandler() : m_bJoysticksInitialized(false), m_mousePosition(0, 0)
 {
     for(int i = 0; i < 3; i++)
     {
@@ -180,29 +168,29 @@ InputHandler::InputHandler()
     }
 }
 
-InputHandler::~InputHandler()
-{
-}
+InputHandler::~InputHandler() = default;
 
+// ReSharper disable once CppMemberFunctionMayBeStatic
 void InputHandler::onKeyDown()
 {
     // do nothing
     // look for InputHandler::isKeyDown
 }
 
+// ReSharper disable once CppMemberFunctionMayBeStatic
 void InputHandler::onKeyUp()
 {
     // do nothing
     // look for InputHandler::isKeyDown
 }
 
-void InputHandler::onMouseMove(SDL_Event& event)
+void InputHandler::onMouseMove(const SDL_Event& event)
 {
-    m_mousePosition.setX(event.motion.x);
-    m_mousePosition.setY(event.motion.y);
+    m_mousePosition.setX(static_cast<float>(event.motion.x));
+    m_mousePosition.setY(static_cast<float>(event.motion.y));
 }
 
-void InputHandler::onMouseButtonDown(SDL_Event& event)
+void InputHandler::onMouseButtonDown(const SDL_Event& event)
 {
     if(event.button.button == SDL_BUTTON_LEFT)
     {
@@ -218,7 +206,7 @@ void InputHandler::onMouseButtonDown(SDL_Event& event)
     }
 }
 
-void InputHandler::onMouseButtonUp(SDL_Event& event)
+void InputHandler::onMouseButtonUp(const SDL_Event& event)
 {
     if(event.button.button == SDL_BUTTON_LEFT)
     {
@@ -242,7 +230,7 @@ void InputHandler::reset()
     }
 }
 
-void InputHandler::onJoystickAxisMove(SDL_Event& event)
+void InputHandler::onJoystickAxisMove(const SDL_Event& event) const
 {
     const int whichOne = event.jaxis.which;
 
@@ -315,13 +303,13 @@ void InputHandler::onJoystickAxisMove(SDL_Event& event)
     }
 }
 
-void InputHandler::onJoystickButtonDown(SDL_Event& event)
+void InputHandler::onJoystickButtonDown(const SDL_Event& event)
 {
     const int whichOne                             = event.jaxis.which;
     m_buttonStates[whichOne][event.jbutton.button] = true;
 }
 
-void InputHandler::onJoystickButtonUp(SDL_Event& event)
+void InputHandler::onJoystickButtonUp(const SDL_Event& event)
 {
     const int whichOne                             = event.jaxis.which;
     m_buttonStates[whichOne][event.jbutton.button] = false;

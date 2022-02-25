@@ -5,7 +5,7 @@
 
 SoundManager* SoundManager::s_pInstance = nullptr;
 
-SoundManager* SoundManager::Instance()
+SoundManager* SoundManager::instance()
 {
     if(s_pInstance == nullptr)
     {
@@ -15,9 +15,9 @@ SoundManager* SoundManager::Instance()
     return s_pInstance;
 }
 
-bool SoundManager::load(const std::string& fileName, const std::string& id, const sound_type type)
+bool SoundManager::load(const std::string& fileName, const std::string& id, const SoundTypeEnum type)
 {
-    if(type == sound_type::SOUND_MUSIC)
+    if(type == SoundTypeEnum::SOUND_MUSIC)
     {
         Mix_Music* pMusic = Mix_LoadMUS(utils::deepSearch(fileName).c_str());
         if(pMusic == nullptr)
@@ -30,7 +30,7 @@ bool SoundManager::load(const std::string& fileName, const std::string& id, cons
         return true;
     }
 
-    if(type == sound_type::SOUND_SFX)
+    if(type == SoundTypeEnum::SOUND_SFX)
     {
         Mix_Chunk* pChunk = Mix_LoadWAV(utils::deepSearch(fileName).c_str());
         if(pChunk == nullptr)
@@ -46,11 +46,13 @@ bool SoundManager::load(const std::string& fileName, const std::string& id, cons
     return false;
 }
 
+// ReSharper disable once CppMemberFunctionMayBeConst
 void SoundManager::playSound(const std::string& id, const int loop)
 {
     Mix_PlayChannel(-1, m_sfxs[id], loop);
 }
 
+// ReSharper disable once CppMemberFunctionMayBeConst
 void SoundManager::playMusic(const std::string& id, const int loop)
 {
     Mix_PlayMusic(m_music[id], loop);

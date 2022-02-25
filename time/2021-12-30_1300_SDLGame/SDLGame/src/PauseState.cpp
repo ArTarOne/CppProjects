@@ -12,7 +12,7 @@ const std::string PauseState::s_pauseID = "PAUSE";
 
 void PauseState::update()
 {
-    for(auto& gameObject : m_gameObjects)
+    for(const auto& gameObject : m_gameObjects)
     {
         gameObject->update();
     }
@@ -20,7 +20,7 @@ void PauseState::update()
 
 void PauseState::render()
 {
-    for(auto& gameObject : m_gameObjects)
+    for(const auto& gameObject : m_gameObjects)
     {
         gameObject->draw();
     }
@@ -42,19 +42,19 @@ bool PauseState::onEnter()
 
 bool PauseState::onExit()
 {
-    for(auto& gameObject : m_gameObjects)
+    for(const auto& gameObject : m_gameObjects)
     {
         gameObject->clean();
     }
     m_gameObjects.clear();
 
-    for(auto& textureID : m_textureIDList)
+    for(const auto& textureID : m_textureIDList)
     {
-        TheTextureManager::Instance()->clearFromTextureMap(textureID);
+        TheTextureManager::instance()->clearFromTextureMap(textureID);
     }
     m_textureIDList.clear();
 
-    TheInputHandler::Instance()->reset(); // reset the mouse button states to false
+    TheInputHandler::instance()->reset(); // reset the mouse button states to false
 
     return true;
 }
@@ -66,7 +66,7 @@ std::string PauseState::getStateID() const
 
 void PauseState::setCallbacks(const std::vector<Callback>& callbacks)
 {
-    for(auto& gameObject : m_gameObjects)
+    for(const auto& gameObject : m_gameObjects)
     {
         if(dynamic_cast<MenuButton*>(gameObject))
         {
@@ -79,12 +79,12 @@ void PauseState::setCallbacks(const std::vector<Callback>& callbacks)
 void PauseState::s_pauseToMain()
 {
     // remove PlayState
-    TheGame::Instance()->getStateMachine()->popState();
+    TheGame::instance()->getStateMachine()->popState();
     // then change to MainMenuState
-    TheGame::Instance()->getStateMachine()->changeState(new MainMenuState());
+    TheGame::instance()->getStateMachine()->changeState(new MainMenuState());
 }
 
 void PauseState::s_resumePlay()
 {
-    TheGame::Instance()->getStateMachine()->popState();
+    TheGame::instance()->getStateMachine()->popState();
 }

@@ -7,8 +7,8 @@
 class ObjectLayer : public Layer
 {
 public:
-    virtual void update();
-    virtual void render();
+    void update() override;
+    void render() override;
 
     std::vector<GameObject*>* getGameObjects();
 

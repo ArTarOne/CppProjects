@@ -22,8 +22,8 @@ class Level
 public:
     ~Level();
 
-    void                  update();
-    void                  render();
+    void                  update() const;
+    void                  render() const;
     std::vector<Tileset>* getTilesets();
     std::vector<Layer*>*  getLayers();
 

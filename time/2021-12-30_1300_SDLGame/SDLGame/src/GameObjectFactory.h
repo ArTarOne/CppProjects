@@ -14,8 +14,8 @@ public:
 class GameObjectFactory
 {
 public:
-    static GameObjectFactory* Instance();
-    bool                      registerType(std::string typeID, BaseCreator* pCreator);
+    static GameObjectFactory* instance();
+    bool                      registerType(const std::string& typeID, BaseCreator* pCreator);
     GameObject*               create(const std::string& typeID);
 
 private:

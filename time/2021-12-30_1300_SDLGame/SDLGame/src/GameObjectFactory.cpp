@@ -8,7 +8,7 @@ GameObjectFactory::GameObjectFactory() = default;
 
 GameObjectFactory::~GameObjectFactory() = default;
 
-GameObjectFactory* GameObjectFactory::Instance()
+GameObjectFactory* GameObjectFactory::instance()
 {
     if(s_pTheGameObjectFactory == nullptr)
     {
@@ -18,7 +18,7 @@ GameObjectFactory* GameObjectFactory::Instance()
     return s_pTheGameObjectFactory;
 }
 
-bool GameObjectFactory::registerType(std::string typeID, BaseCreator* pCreator)
+bool GameObjectFactory::registerType(const std::string& typeID, BaseCreator* pCreator)
 {
     const auto& it = m_creators.find(typeID);
     // if the type is already registered, do nothing
@@ -39,6 +39,6 @@ GameObject* GameObjectFactory::create(const std::string& typeID)
         std::cerr << "could not find type: " << typeID << "\n";
         return nullptr;
     }
-    BaseCreator* pCreator = (*it).second;
+    const BaseCreator* pCreator = (*it).second;
     return pCreator->createGameObject();
 }

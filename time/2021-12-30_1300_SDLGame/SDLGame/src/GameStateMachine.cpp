@@ -49,7 +49,7 @@ void GameStateMachine::popState()
     }
 }
 
-void GameStateMachine::update()
+void GameStateMachine::update() const
 {
     if(!m_gameStates.empty())
     {
@@ -57,7 +57,7 @@ void GameStateMachine::update()
     }
 }
 
-void GameStateMachine::render()
+void GameStateMachine::render() const
 {
     if(!m_gameStates.empty())
     {
@@ -67,7 +67,7 @@ void GameStateMachine::render()
 
 void GameStateMachine::destroyRemoveCandidates()
 {
-    for(auto& stateToDelete : m_removeCandidates)
+    for(const auto& stateToDelete : m_removeCandidates)
     {
         delete stateToDelete;
     }

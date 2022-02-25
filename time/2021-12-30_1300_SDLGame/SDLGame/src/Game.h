@@ -6,19 +6,19 @@
 class Game
 {
 public:
-    static Game* Instance();
+    static Game* instance();
 
     bool init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
-    void render();
-    void update();
-    void handleEvents();
+    void render() const;
+    void update() const;
+    void handleEvents() const;
     void clean() const;
     bool running() const;
-    void finalizeIteration();
+    void finalizeIteration() const;
     void quit();
 
     SDL_Renderer*     getRenderer() const;
-    GameStateMachine* getStateMachine();
+    GameStateMachine* getStateMachine() const;
     int               getGameWidth() const;
     int               getGameHeight() const;
 
@@ -31,9 +31,9 @@ private:
     SDL_Window*       m_pWindow   = nullptr;
     SDL_Renderer*     m_pRenderer = nullptr;
     bool              m_bRunning  = false;
-    GameStateMachine* m_pGameStateMachine;
-    int               m_gameWidth;
-    int               m_gameHeight;
+    GameStateMachine* m_pGameStateMachine{};
+    int               m_gameWidth{};
+    int               m_gameHeight{};
 };
 
 using TheGame = Game;

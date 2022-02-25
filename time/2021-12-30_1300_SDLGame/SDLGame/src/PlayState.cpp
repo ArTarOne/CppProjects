@@ -11,17 +11,15 @@
 
 const std::string PlayState::s_playID = "PLAY";
 
-PlayState::PlayState()
-{
-}
+PlayState::PlayState() = default;
 
 void PlayState::update()
 {
     m_pLevel->update();
 
-    if(TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_ESCAPE))
+    if(TheInputHandler::instance()->isKeyDown(SDL_SCANCODE_ESCAPE))
     {
-        TheGame::Instance()->getStateMachine()->pushState(new PauseState());
+        TheGame::instance()->getStateMachine()->pushState(new PauseState());
     }
 }
 
@@ -41,9 +39,9 @@ bool PlayState::onExit() // TODO never called. Error prone
 {
     delete m_pLevel;
 
-    for(auto& textureID : m_textureIDList)
+    for(const auto& textureID : m_textureIDList)
     {
-        TheTextureManager::Instance()->clearFromTextureMap(textureID);
+        TheTextureManager::instance()->clearFromTextureMap(textureID);
     }
     m_textureIDList.clear();
 

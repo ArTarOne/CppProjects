@@ -9,17 +9,13 @@
 
 const std::string MainMenuState::s_menuID = "MENU";
 
-MainMenuState::MainMenuState()
-{
-}
+MainMenuState::MainMenuState() = default;
 
-MainMenuState::~MainMenuState()
-{
-}
+MainMenuState::~MainMenuState() = default;
 
 void MainMenuState::update()
 {
-    for(auto& gameObject : m_gameObjects)
+    for(const auto& gameObject : m_gameObjects)
     {
         gameObject->update();
     }
@@ -27,7 +23,7 @@ void MainMenuState::update()
 
 void MainMenuState::render()
 {
-    for(auto& gameObject : m_gameObjects)
+    for(const auto& gameObject : m_gameObjects)
     {
         gameObject->draw();
     }
@@ -49,15 +45,15 @@ bool MainMenuState::onEnter()
 
 bool MainMenuState::onExit()
 {
-    for(auto& gameObject : m_gameObjects)
+    for(const auto& gameObject : m_gameObjects)
     {
         gameObject->clean();
     }
     m_gameObjects.clear();
 
-    for(auto& textureID : m_textureIDList)
+    for(const auto& textureID : m_textureIDList)
     {
-        TheTextureManager::Instance()->clearFromTextureMap(textureID);
+        TheTextureManager::instance()->clearFromTextureMap(textureID);
     }
     m_textureIDList.clear();
 
@@ -71,7 +67,7 @@ std::string MainMenuState::getStateID() const
 
 void MainMenuState::setCallbacks(const std::vector<Callback>& callbacks)
 {
-    for(auto& gameObject : m_gameObjects)
+    for(const auto& gameObject : m_gameObjects)
     {
         if(dynamic_cast<MenuButton*>(gameObject))
         {
@@ -83,10 +79,10 @@ void MainMenuState::setCallbacks(const std::vector<Callback>& callbacks)
 
 void MainMenuState::s_menuToPlay()
 {
-    TheGame::Instance()->getStateMachine()->changeState(new PlayState());
+    TheGame::instance()->getStateMachine()->changeState(new PlayState());
 }
 
 void MainMenuState::s_exitFromMenu()
 {
-    TheGame::Instance()->quit();
+    TheGame::instance()->quit();
 }

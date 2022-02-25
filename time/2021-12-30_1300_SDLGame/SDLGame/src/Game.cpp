@@ -9,12 +9,11 @@
 #include "Player.h"
 #include "PlayState.h"
 #include "SoundManager.h"
-#include "TextureManager.h"
 
 Game::Game()  = default;
 Game::~Game() = default;
 
-Game* Game::Instance()
+Game* Game::instance()
 {
     if(m_pTheGameInstance == nullptr)
     {
@@ -24,8 +23,7 @@ Game* Game::Instance()
     return m_pTheGameInstance;
 }
 
-bool Game::init(const char* title, const int xpos, const int ypos, const int width, int height,
-                const bool  fullscreen)
+bool Game::init(const char* title, const int xpos, const int ypos, const int width, const int height, const bool fullscreen)
 {
     m_gameWidth  = width;
     m_gameHeight = height;
@@ -43,7 +41,7 @@ bool Game::init(const char* title, const int xpos, const int ypos, const int wid
         return false;
     }
 
-    TheInputHandler::Instance()->initialiseJoysticks();
+    TheInputHandler::instance()->initialiseJoysticks();
 
     m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
     if(m_pWindow == nullptr)
@@ -64,12 +62,12 @@ bool Game::init(const char* title, const int xpos, const int ypos, const int wid
     // This function expects Red, Green, Blue and Alpha as color values
     SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
 
-    TheGameObjectFactory::Instance()->registerType("MenuButton", new MenuButtonCreator());
-    TheGameObjectFactory::Instance()->registerType("Player", new PlayerCreator());
-    TheGameObjectFactory::Instance()->registerType("Enemy", new EnemyCreator());
-    TheGameObjectFactory::Instance()->registerType("AnimatedGraphic", new AnimatedGraphicCreator());
+    TheGameObjectFactory::instance()->registerType("MenuButton", new MenuButtonCreator());
+    TheGameObjectFactory::instance()->registerType("Player", new PlayerCreator());
+    TheGameObjectFactory::instance()->registerType("Enemy", new EnemyCreator());
+    TheGameObjectFactory::instance()->registerType("AnimatedGraphic", new AnimatedGraphicCreator());
 
-    TheSoundManager::Instance()->load("boom.wav", "boom", sound_type::SOUND_SFX);
+    TheSoundManager::instance()->load("boom.wav", "boom", SoundTypeEnum::SOUND_SFX);
 
     m_pGameStateMachine = new GameStateMachine();
     m_pGameStateMachine->changeState(new MainMenuState());
@@ -78,7 +76,7 @@ bool Game::init(const char* title, const int xpos, const int ypos, const int wid
     return true;
 }
 
-void Game::render()
+void Game::render() const
 {
     SDL_RenderClear(m_pRenderer); // clear to the draw color
 
@@ -87,16 +85,16 @@ void Game::render()
     SDL_RenderPresent(m_pRenderer); // draw to the screen
 }
 
-void Game::update()
+void Game::update() const
 {
     m_pGameStateMachine->update();
 }
 
-void Game::handleEvents()
+void Game::handleEvents() const
 {
-    TheInputHandler::Instance()->update();
+    TheInputHandler::instance()->update();
 
-    if(TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RETURN))
+    if(TheInputHandler::instance()->isKeyDown(SDL_SCANCODE_RETURN))
     {
         m_pGameStateMachine->changeState(new PlayState());
     }
@@ -105,7 +103,7 @@ void Game::handleEvents()
 void Game::clean() const
 {
     std::cout << "cleaning game\n";
-    TheInputHandler::Instance()->clean();
+    TheInputHandler::instance()->clean();
     SDL_DestroyRenderer(m_pRenderer);
     SDL_DestroyWindow(m_pWindow);
     SDL_Quit();
@@ -116,7 +114,7 @@ bool Game::running() const
     return m_bRunning;
 }
 
-void Game::finalizeIteration()
+void Game::finalizeIteration() const
 {
     m_pGameStateMachine->destroyRemoveCandidates();
 }
@@ -131,7 +129,7 @@ SDL_Renderer* Game::getRenderer() const
     return m_pRenderer;
 }
 
-GameStateMachine* Game::getStateMachine()
+GameStateMachine* Game::getStateMachine() const
 {
     return m_pGameStateMachine;
 }

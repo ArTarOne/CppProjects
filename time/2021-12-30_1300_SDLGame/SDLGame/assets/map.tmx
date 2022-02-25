@@ -20,7 +20,7 @@
     <property name="textureWidth" value="128"/>
    </properties>
   </object>
-  <object id="11" name="Helicopter2" type="Enemy_DISABLE" x="442.333" y="186.667" width="38" height="32">
+  <object id="11" name="Helicopter2" type="Enemy" x="442.333" y="186.667" width="38" height="32">
    <properties>
     <property name="numFrames" value="4"/>
     <property name="textureHeight" value="55"/>
@@ -28,7 +28,7 @@
     <property name="textureWidth" value="128"/>
    </properties>
   </object>
-  <object id="12" name="Helicopter2" type="Enemy_DISABLE" x="257" y="294.667" width="38" height="32">
+  <object id="12" name="Helicopter2" type="Enemy" x="257" y="294.667" width="38" height="32">
    <properties>
     <property name="numFrames" value="4"/>
     <property name="textureHeight" value="55"/>

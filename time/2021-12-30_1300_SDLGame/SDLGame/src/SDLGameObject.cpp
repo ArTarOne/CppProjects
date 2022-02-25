@@ -2,11 +2,7 @@
 #include "Game.h"
 #include "TextureManager.h"
 
-SDLGameObject::SDLGameObject()
-    : m_position(0, 0),
-      m_velocity(0, 0),
-      m_acceleration(0, 0),
-      m_flip(SDL_FLIP_NONE)
+SDLGameObject::SDLGameObject() : m_position(0, 0), m_velocity(0, 0), m_acceleration(0, 0), m_flip(SDL_FLIP_NONE)
 {
 }
 
@@ -21,15 +17,9 @@ void SDLGameObject::draw()
         m_flip = SDL_FLIP_NONE;
     }
 
-    TextureManager::Instance()->drawFrame(m_textureID,
-                                          (Uint32)m_position.getX(),
-                                          (Uint32)m_position.getY(),
-                                          m_width,
-                                          m_height,
-                                          m_currentRow,
-                                          m_currentFrame,
-                                          TheGame::Instance()->getRenderer(),
-                                          m_flip);
+    TextureManager::instance()->drawFrame(m_textureID, static_cast<int>(m_position.getX()),
+                                          static_cast<int>(m_position.getY()), m_width, m_height, m_currentRow,
+                                          m_currentFrame, TheGame::instance()->getRenderer(), m_flip);
 }
 
 void SDLGameObject::update()
